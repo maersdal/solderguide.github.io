@@ -1,0 +1,63 @@
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}

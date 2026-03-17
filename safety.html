@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="dark" name="color-scheme" /><title>Safety &amp; PPE — SOLDER.LIBRARY</title><style>/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}
+
+/* === STYLE — typography, panels, components === */
+/* Loaded via <link>. Builds on variables/layout from base.css. */
+
+/* === PANELS === */
+.callout, .data-card, figure, details.fig, pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* === SIDEBAR DETAILS === */
+.sidebar-header {
+  padding: 0 var(--sp-lg) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+}
+.sidebar-logo {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-heading); text-decoration: none;
+}
+.sidebar-logo span { color: var(--text-dim); font-weight: 400; }
+.sidebar-section { padding: var(--sp-sm) var(--sp-lg); }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.sidebar-link {
+  display: block; padding: 0.2rem var(--sp-sm); font-size: 0.8rem;
+  color: var(--text-muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.sidebar-link.active {
+  color: var(--color-value);
+  background: color-mix(in srgb, var(--color-value) 6%, transparent);
+  border-left-color: var(--color-value);
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; line-height: 1.25; }
+
+h1 {
+  font-size: 1.6rem; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+h1::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 6rem; height: 2px; background: var(--color-trace);
+}
+h1 .accent { color: var(--color-heading); }
+
+h2 {
+  font-size: 1.15rem; margin-top: var(--sp-2xl); margin-bottom: var(--sp-sm);
+  color: var(--text); position: relative;
+}
+h2::before {
+  content: '// '; color: var(--text-dim);
+  font-family: var(--font-mono); font-weight: 400; font-size: 0.85em;
+}
+h2::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-hi) 0%, transparent 60%);
+}
+
+h3 { font-size: 0.95rem; margin-top: var(--sp-lg); margin-bottom: var(--sp-xs); color: var(--color-sub); }
+p { margin-bottom: var(--sp-md); font-size: 0.9rem; }
+a { color: var(--color-link); text-decoration: none; border-bottom: 1px solid transparent; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--color-value); font-style: normal; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.82em;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.1em 0.35em; color: var(--color-link);
+}
+pre { padding: var(--sp-md); overflow-x: auto; margin-bottom: var(--sp-lg); }
+pre code { background: none; border: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; margin: var(--sp-md) 0; font-size: 0.82rem; }
+thead { border-bottom: 2px solid var(--border-hi); }
+th {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); text-align: left; padding: var(--sp-xs) var(--sp-sm);
+}
+td { padding: var(--sp-xs) var(--sp-sm); border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-card); color: var(--text); }
+td.val  { color: var(--color-value); font-family: var(--font-mono); font-weight: 500; }
+td.good { color: var(--color-link); }
+td.warn { color: var(--color-value); }
+td.bad  { color: var(--color-danger); }
+
+/* === CALLOUTS === */
+.callout {
+  padding: var(--sp-sm) var(--sp-md); margin: var(--sp-md) 0;
+  border-left: 2px solid var(--_accent, var(--border)); font-size: 0.88rem;
+}
+.callout p { margin-bottom: var(--sp-xs); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-title {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp-xs); color: var(--_accent, var(--text-dim));
+}
+.callout.beginner      { --_accent: var(--color-link); }
+.callout.advanced      { --_accent: var(--color-value); }
+.callout.warning       { --_accent: var(--color-danger); }
+.callout.key-principle { --_accent: var(--color-trace); }
+
+/* === DATA CARDS === */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--sp-sm); margin: var(--sp-md) 0;
+}
+.data-card { padding: var(--sp-sm) var(--sp-md); position: relative; }
+.data-card-label {
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.data-card-value {
+  font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-value); line-height: 1.3;
+}
+.data-card-value .unit { font-size: 0.65em; color: var(--text-muted); font-weight: 400; }
+.data-card-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+a.data-card { text-decoration: none; display: block; color: inherit; border-bottom: 1px solid var(--border); }
+
+/* === TEMP BAR === */
+.temp-bar {
+  height: 4px; border-radius: 2px; margin: var(--sp-sm) 0; position: relative;
+  background: linear-gradient(90deg, var(--color-link) 0%, var(--color-value) 50%, var(--color-danger) 100%);
+}
+.temp-bar-marker { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 1px; }
+
+/* === LISTS === */
+ul, ol { margin-bottom: var(--sp-md); padding-left: var(--sp-lg); }
+li { margin-bottom: 0.1rem; color: var(--text-muted); font-size: 0.88rem; }
+li strong { color: var(--text); }
+ul { list-style: none; }
+ul li::before {
+  content: '>'; font-family: var(--font-mono); color: var(--color-trace);
+  display: inline-block; width: 1em; margin-left: -1em; font-weight: 700; font-size: 0.8em;
+}
+ol { list-style: none; counter-reset: item; }
+ol li { counter-increment: item; }
+ol li::before {
+  content: counter(item, decimal-leading-zero);
+  font-family: var(--font-mono); color: var(--text-dim);
+  font-size: 0.7em; font-weight: 700; margin-right: 0.5em;
+}
+
+/* === DEFINITION LISTS (glossary) === */
+dl { margin-bottom: var(--sp-lg); }
+dt {
+  font-weight: 700; font-size: 0.9rem; color: var(--color-heading);
+  margin-top: var(--sp-md); padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+dt:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+dd {
+  margin-left: 0; margin-top: var(--sp-xs);
+  font-size: 0.88rem; color: var(--text); line-height: 1.55;
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--border);
+}
+
+/* === FIGURE === */
+figure { margin: var(--sp-md) 0; overflow: hidden; }
+figure img { width: 100%; display: block; }
+figcaption {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);
+  padding: var(--sp-xs) var(--sp-sm); border-top: 1px solid var(--border);
+}
+
+/* === EXPANDABLE FIGURES === */
+details.fig { margin: var(--sp-md) 0; overflow: hidden; }
+details.fig summary {
+  padding: var(--sp-sm) var(--sp-md); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: var(--sp-sm);
+  user-select: none; list-style: none;
+}
+details.fig summary::-webkit-details-marker { display: none; }
+details.fig summary::before {
+  content: '\25b6'; font-size: 0.6em; color: var(--color-link);
+  display: inline-block;
+}
+details.fig .fig-content { padding: var(--sp-sm) var(--sp-md); border-top: 1px solid var(--border); }
+details.fig .fig-content img { max-width: 100%; display: block; border-radius: 2px; }
+details.fig .fig-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+details.fig .fig-grid img { max-width: 100%; display: block; border-radius: 2px; }
+
+/* === TRACE DIVIDER === */
+.trace-divider { height: 1px; margin: var(--sp-xl) 0; background: var(--border); position: relative; }
+.trace-divider::before {
+  content: ''; position: absolute; left: 0; top: -1px;
+  width: 4rem; height: 3px; background: var(--color-trace);
+  border-radius: 1px;
+}
+.trace-divider::after {
+  content: ''; position: absolute; left: 4rem; top: -3px;
+  width: 7px; height: 7px; background: var(--bg);
+  border: 2px solid var(--color-trace); border-radius: 50%;
+}
+
+/* === HOME LAYOUT === */
+.home-layout { }
+.home-content { }
+
+/* === KNOWLEDGE TREE === */
+.knowledge-tree {
+  position: relative;
+  width: 100%; max-width: 350px;
+  aspect-ratio: 350 / 580;
+  margin-top: var(--sp-xl);
+}
+.tree-canvas {
+  position: absolute; inset: 0;
+  width: 350px; height: 580px;
+  transform-origin: top left;
+}
+.tree-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.tree-edge {
+  fill: none; stroke: var(--color-trace); stroke-width: 2;
+  opacity: 0.8;
+}
+.tree-edge-glow {
+  filter: url(#tree-glow);
+}
+.tree-edge-glow path {
+  fill: none; stroke: var(--color-trace); stroke-width: 8;
+  opacity: 0.3;
+}
+.tree-node {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--color-trace); text-decoration: none;
+  border: 1px solid var(--color-trace); border-bottom: 1px solid var(--color-trace);
+  background: color-mix(in srgb, var(--color-trace) 8%, var(--bg));
+  padding: 3px 7px; border-radius: 3px;
+  /* Glow via outline — outline-color IS allowed to change on :visited */
+  outline: 4px solid color-mix(in srgb, var(--color-trace) 25%, transparent);
+  outline-offset: 2px;
+}
+.tree-node:visited {
+  color: var(--text-dim);
+  border-color: var(--border);
+  background-color: var(--bg-card);
+  outline-color: transparent;
+}
+
+/* Large screens: tree breaks out into right margin */
+@media (min-width: 102rem) {
+  .main-content:has(.knowledge-tree) { position: relative; }
+  .knowledge-tree {
+    position: absolute;
+    right: var(--sp-xl);
+    top: var(--sp-xl);
+    margin-top: 0;
+    width: 350px;
+  }
+}
+
+/* === FOOTER === */
+.site-footer {
+  border-top: 1px solid var(--border); padding: var(--sp-lg) 0; margin-top: var(--sp-xl);
+  text-align: center; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);
+}
+
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}
+</style></head><body><button class="sidebar-toggle" onclick="document.querySelector(&apos;.sidebar&apos;).classList.toggle(&apos;open&apos;)">= menu</button><div class="site-wrapper"><nav class="sidebar"><div class="sidebar-header"><a class="sidebar-logo" href="index.html">SOLDER<span>.LIBRARY</span></a></div><div class="sidebar-section"><div class="sidebar-section-title">Fundamentals</div><a class="sidebar-link" href="heat-science.html">Heat Science</a><a class="sidebar-link" href="flux.html">Flux</a><a class="sidebar-link" href="alloys.html">Alloys &amp; Temperatures</a><a class="sidebar-link" href="cleanliness.html">Cleanliness</a></div><div class="sidebar-section"><div class="sidebar-section-title">Technique</div><a class="sidebar-link" href="hand-soldering.html">Hand Soldering</a><a class="sidebar-link" href="hot-air.html">Hot Air Rework</a><a class="sidebar-link" href="smd-prototyping.html">SMD Prototyping</a><a class="sidebar-link" href="fixturing.html">Fixturing &amp; Workholding</a><a class="sidebar-link" href="joint-quality.html">Joint Quality</a></div><div class="sidebar-section"><div class="sidebar-section-title">Process</div><a class="sidebar-link" href="preheat.html">Preheat</a><a class="sidebar-link" href="reflow-profiles.html">Reflow Profiles</a><a class="sidebar-link" href="solder-paste.html">Solder Paste</a></div><div class="sidebar-section"><div class="sidebar-section-title">Deep Dives</div><a class="sidebar-link" href="metallurgy.html">Joint Metallurgy</a><a class="sidebar-link" href="tin-whiskers.html">Tin Whiskers</a></div><div class="sidebar-section"><div class="sidebar-section-title">Reference</div><a class="sidebar-link active" href="safety.html">Safety &amp; PPE</a><a class="sidebar-link" href="standards.html">Standards (NASA/IPC)</a><a class="sidebar-link" href="troubleshooting.html">Troubleshooting</a><a class="sidebar-link" href="glossary.html">Glossary</a><a class="sidebar-link" href="sources.html">Sources</a></div></nav><main class="main-content"><div class="page-content"><h1>Safety <span class="accent">&amp; PPE</span></h1><p>Soldering exposes you to fumes, heat, molten metal, and potentially toxic materials. Most of these risks are manageable — but only if you know what they are and take the right precautions for your exposure level.</p><div class="trace-divider"></div><h2>The Hazards</h2><h3>Fumes</h3><p>When you solder, the fumes you see rising from the joint are <em>flux decomposition products</em> — not metal vapor. At normal soldering temperatures (300-400°C), solder alloys don&apos;t vaporize. The flux does.</p><ul><li><strong>Rosin (colophony) fumes</strong> — the primary irritant. Rosin-based flux (R, RMA, RA) produces abietic acid and other decomposition products when heated. These are respiratory sensitizers: repeated exposure can cause occupational asthma that <em>does not go away</em> once developed.</li><li><strong>Organic acid flux fumes</strong> — water-soluble fluxes produce different organic acids. Less studied than rosin, but still irritating to airways.</li><li><strong>No-clean flux fumes</strong> — generally milder, but not fume-free. Still contains volatile organic compounds.</li><li><strong>Lead fumes</strong> — not a significant inhalation risk at soldering temperatures. Lead doesn&apos;t vaporize until <strong>~1620°C (2950°F)</strong> — over four times your iron temperature. The real lead risk is ingestion from hand-to-mouth contact (see below).</li></ul><div class="callout key-principle"><div class="callout-title">The key distinction</div><p>Flux fumes are the inhalation hazard. Metal exposure (lead <em>and</em> tin) is an ingestion/contact hazard — and acidic flux residues make tin surprisingly bioavailable. Different risks, different controls.</p></div><h3>Lead Exposure</h3><p>If you use leaded solder (Sn63/Pb37, Sn60/Pb40), lead is present as:</p><ul><li><strong>Particulate on surfaces</strong> — lead dust and residue accumulates on hands, tools, workbenches, and anything in the work area</li><li><strong>Ingestion risk</strong> — the primary route. Touching leaded solder or contaminated surfaces, then touching your face or eating without washing hands</li><li><strong>Not a significant vapor risk</strong> — at 300-400°C, lead stays in the liquid/solid phase. Only a concern above ~500°C in industrial processes</li></ul><div class="callout warning"><div class="callout-title">Lead-free doesn&apos;t mean hazard-free</div><p>Lead-free solder (SAC305 etc.) eliminates the lead risk but introduces its own problems. The flux fumes are identical — actually worse, because lead-free requires higher temperatures (more flux decomposition). And tin itself is a neurotoxin that most people overlook entirely. See <em>Tin Toxicity</em> below.</p></div><h3>Burns</h3><p>The obvious one. Soldering irons run 300-400°C. Hot air stations blow 200-450°C air. Molten solder is 220-260°C.</p><ul><li>Iron tip contact: instant burn, typically small and localized</li><li>Molten solder splash: tiny droplets from overheated joints or flicking the iron. Usually minor but startling.</li><li>Hot air: less obvious danger — no visible heat source, easy to put your hand in the airflow</li><li>Hot components: after rework, components and boards retain heat for 30-60 seconds. Easy to grab too soon.</li></ul><h3>Other Hazards</h3><ul><li><strong>Flying leads</strong> — trimming through-hole leads sends small metal projectiles. Always point cutters away from your face.</li><li><strong>UV from some flux</strong> — negligible. Not a real concern at hobby or light production levels.</li><li><strong>Cleaning solvents</strong> — IPA is flammable. Other flux removers may have specific hazards. Read the SDS.</li><li><strong>Electrical</strong> — soldering on live circuits. Don&apos;t. But if you must, understand the voltage present and use appropriate isolation.</li></ul><div class="trace-divider"></div><h2>Exposure Tiers</h2><p>The precautions you need depend on how much you solder. A weekend hobbyist and a production line worker face very different cumulative exposures.</p><table><thead><tr><th>Tier</th><th>Exposure Level</th><th>Example</th><th>Key Risks</th></tr></thead><tbody><tr><td>Occasional</td><td>&lt; 1 hour/week</td><td>Weekend project, occasional repair</td><td>Burns. Fume irritation minimal.</td></tr><tr><td>Regular hobby</td><td>1-10 hours/week</td><td>Active hobbyist, frequent builds</td><td>Cumulative fume exposure. Lead hygiene if using leaded solder.</td></tr><tr><td>Daily/professional</td><td>2-8 hours/day</td><td>Technician, production, rework station</td><td>Serious fume risk. Occupational asthma. Chronic lead exposure if leaded.</td></tr><tr><td>Heavy production</td><td>Full shift, multiple stations</td><td>Production line, wave soldering area</td><td>All of the above plus ambient exposure from neighboring stations.</td></tr></tbody></table><div class="trace-divider"></div><h2>Controls by Tier</h2><p>Start from the top — engineering controls are always better than PPE. PPE is the last line of defense, not the first.</p><h3>Everyone (All Tiers)</h3><ul><li><strong>Don&apos;t eat, drink, or touch your face while soldering.</strong> This applies to all solder — leaded or not. Flux residues mobilize tin into absorbable form on your skin.</li><li><strong>Wash hands after soldering.</strong> Soap and water. Every time. Before eating, before leaving the bench. This isn&apos;t just about lead — tin + acid flux residue on your hands is bioavailable.</li><li><strong>Safety glasses.</strong> Flying leads, solder splashes, flux spatter. Cheap insurance. Standard ANSI Z87.1 safety glasses are fine.</li><li><strong>Work on a heat-resistant surface.</strong> Silicone mat, ceramic tile — something that won&apos;t melt or catch fire if you drop the iron.</li><li><strong>Iron holder with a stable base.</strong> A hot iron rolling off the bench is a burn and a fire hazard.</li></ul><h3>Regular Hobby (1-10 hrs/week)</h3><p>Everything above, plus:</p><ul><li><strong>Fume extraction at the source.</strong> A desktop fume extractor with a carbon filter, positioned 10-15cm from the joint. This is the single most important upgrade over &quot;just open a window.&quot; A fan blowing fumes away from your face is <em>not</em> extraction — it disperses fumes into the room.</li><li><strong>Dedicated work area.</strong> Don&apos;t solder on the kitchen table. Lead residue (if applicable) gets into household surfaces.</li><li><strong>Separate work clothes or apron.</strong> If using leaded solder — keep contamination out of the laundry and off furniture.</li></ul><div class="callout beginner"><div class="callout-title">The minimum viable fume setup</div><p>A $30-50 desktop fume extractor with an activated carbon filter. Position it close to the work — effectiveness drops sharply with distance. Replace the carbon filter when you can smell fumes through it (typically every 3-6 months with regular use). This handles the vast majority of hobby-level fume exposure.</p></div><h3>Daily/Professional (2-8 hrs/day)</h3><p>Everything above, plus:</p><ul><li><strong>Bench-mounted or ducted extraction.</strong> Desktop extractors aren&apos;t enough for 8 hours. You need a proper extraction arm or bench-integrated extraction that vents outside or through a HEPA+carbon filtration system. The extraction point should be as close to the solder joint as possible.</li><li><strong>Tip extraction (some systems).</strong> High-end soldering stations (e.g. Weller Zero Smog, Hakko FA-430) extract fumes through or directly adjacent to the iron tip. Most effective capture rate.</li><li><strong>Blood lead monitoring.</strong> If using leaded solder daily, periodic blood lead level (BLL) testing is recommended. Many jurisdictions require it for occupational exposure. Target: &lt;10 µg/dL (CDC/NIOSH). Action level: 25 µg/dL.</li><li><strong>Wipe-down protocol.</strong> End-of-day cleaning of work surfaces with damp cloth to remove lead particulate.</li><li><strong>No compressed air for cleaning.</strong> Blowing compressed air over a leaded solder workstation aerosolizes lead particles. Use damp wipes or HEPA vacuuming.</li></ul><h3>Heavy Production</h3><p>Everything above, plus:</p><ul><li><strong>Room-level ventilation.</strong> General ventilation in addition to local extraction. HVAC designed for the space.</li><li><strong>Air quality monitoring.</strong> Periodic measurement of airborne flux fume concentration and (if applicable) lead particulate.</li><li><strong>Respiratory protection (if extraction is inadequate).</strong> Half-face respirator with organic vapor cartridges (for flux fumes) and P100 particulate filter (for lead). This is a <em>backup</em> when engineering controls aren&apos;t sufficient — not a substitute for proper extraction.</li><li><strong>Designated eating areas.</strong> Physically separated from the production floor. Hand washing stations between work and break areas.</li><li><strong>Regular health surveillance.</strong> Spirometry for respiratory function. Blood lead testing on a defined schedule.</li></ul><div class="trace-divider"></div><h2>PPE Reference</h2><table><thead><tr><th>PPE</th><th>What It Protects Against</th><th>When to Use</th><th>Notes</th></tr></thead><tbody><tr><td>Safety glasses (ANSI Z87.1)</td><td>Lead trimming, splash, spatter</td><td>Always</td><td>Prescription safety glasses count. Regular glasses don&apos;t — no side shields.</td></tr><tr><td>Nitrile gloves</td><td>Lead contact, flux chemicals</td><td>Leaded solder work, flux cleanup</td><td>Optional for hobby lead-free. Reduces dexterity — some prefer to just wash hands.</td></tr><tr><td>Fume extractor (carbon filter)</td><td>Flux fume inhalation</td><td>Any regular soldering</td><td>Position 10-15cm from joint. Replace filter on schedule.</td></tr><tr><td>Half-face respirator (OV/P100)</td><td>Flux fumes + lead particulate</td><td>When extraction is insufficient, heavy production</td><td>Must be fit-tested. Cartridges have a service life — replace per manufacturer schedule.</td></tr><tr><td>Heat-resistant gloves</td><td>Burns from hot air, ovens</td><td>Reflow oven work, heavy hot air use</td><td>Not for precision hand soldering — too bulky. For handling hot boards and enclosures.</td></tr><tr><td>ESD wrist strap</td><td>ESD damage to components</td><td>Always (for component safety, not personal safety)</td><td>Protects the work, not you. But worth listing as essential bench equipment.</td></tr></tbody></table><div class="callout advanced"><div class="callout-title">ESD-safe soldering — the numbers</div><p>An ESD-safe soldering station must meet:</p><ul><li><strong>Tip-to-ground resistance: &lt; 2 ohms</strong></li><li><strong>Tip-to-ground potential: &lt; 2 millivolts</strong></li></ul><p>The wrist strap (if connected to the station&apos;s equipotential port) must include <strong>at least a 1 MΩ resistor</strong> — this limits current to a safe level if you accidentally contact a live conductor while still draining static charge. This is not about protecting components — it&apos;s about not electrocuting yourself through a zero-resistance path to ground.</p></div><div class="trace-divider"></div><h2>Fume Extraction: What to Know</h2><p>&quot;I have a fan&quot; is not fume extraction. A fan disperses fumes into the room. Extraction captures them at the source before you breathe them.</p><h3>Working Distance</h3><p>Position the extraction nozzle <strong>10-15 cm (4-6 inches)</strong> from the joint. Capture efficiency drops sharply with distance — at 30 cm you&apos;re catching almost nothing. Room air currents (HVAC, open windows) further reduce effectiveness.</p><h3>Filter Types</h3><table><thead><tr><th>Filter</th><th>Captures</th><th>Doesn&apos;t Capture</th><th>Replace When</th></tr></thead><tbody><tr><td>Activated carbon</td><td>Flux fume gases, organic vapors, odors</td><td>Particulates, CO, CO₂</td><td>You smell fumes through it (~monthly at regular use)</td></tr><tr><td>HEPA</td><td>Particles ≥0.3µm (flux smoke, lead dust)</td><td>Gases and vapors</td><td>Airflow drops noticeably (typically 3-6 months)</td></tr><tr><td>Pre-filter</td><td>Large particles, extends main filter life</td><td>Gases</td><td>Visibly clogged or per schedule (~160 hours)</td></tr></tbody></table><p>Most bench-top extractors use activated carbon only. For daily professional use, a combined HEPA + carbon system with a pre-filter is worth the investment — carbon alone won&apos;t catch fine particulate from flux combustion.</p><div class="callout warning"><div class="callout-title">Never use a standard fume extractor for solvents</div><p>Desktop and bench fume extractors have non-sealed motors. Flammable vapors (IPA, MEK, acetone) at the right fuel/air ratio can be ignited by motor brush sparks. Fume extractors are designed for flux smoke, not solvent vapors. Use solvent fumes only in a properly rated fume hood.</p></div><div class="trace-divider"></div><h2>Lead: The Numbers</h2><p>If you use leaded solder, here&apos;s what the exposure limits and guidelines actually say.</p><table><thead><tr><th>Metric</th><th>Value</th><th>Source</th></tr></thead><tbody><tr><td>OSHA PEL (airborne lead)</td><td>50 µg/m³ (8-hr TWA)</td><td>29 CFR 1910.1025</td></tr><tr><td>OSHA Action Level</td><td>30 µg/m³ (8-hr TWA)</td><td>29 CFR 1910.1025</td></tr><tr><td>NIOSH REL (airborne lead)</td><td>50 µg/m³ (8-hr TWA)</td><td>NIOSH Pocket Guide</td></tr><tr><td>CDC reference BLL (adults)</td><td>&lt; 10 µg/dL</td><td>CDC/NIOSH ABLES</td></tr><tr><td>OSHA medical removal BLL</td><td>≥ 50 µg/dL</td><td>29 CFR 1910.1025</td></tr><tr><td>Return to work BLL</td><td>&lt; 40 µg/dL</td><td>29 CFR 1910.1025</td></tr></tbody></table><p>For context: hand soldering at a bench with <em>no</em> extraction typically produces airborne lead levels well below the OSHA PEL. The ingestion route is the bigger concern for hand soldering. But in enclosed spaces with poor ventilation and multiple stations, airborne levels can creep up.</p><div class="callout advanced"><div class="callout-title">Why lead-free doesn&apos;t eliminate all concern</div><p>SAC305 and other lead-free alloys eliminated lead from the equation, but:</p><ul><li>Higher soldering temperatures (360-380°C vs 315-340°C for leaded) mean more aggressive flux decomposition and higher fume output</li><li>Tin itself is neurotoxic — and acidic flux residues can make it <em>more</em> bioavailable than the lead it replaced (see below)</li><li>Some lead-free alloys contain small amounts of other elements (bismuth, antimony, indium) with their own toxicity profiles</li><li>The occupational asthma risk from rosin flux is <em>independent of alloy type</em> — this is the primary long-term health risk for solderers regardless of whether they use leaded or lead-free solder</li></ul></div><div class="trace-divider"></div><h2>Tin: The Overlooked Neurotoxin</h2><p>Everyone worries about lead. Almost nobody talks about tin — which is the <em>majority component</em> of every solder alloy, leaded or not. Sn63/Pb37 is 63% tin. SAC305 is 96.5% tin. And tin is not biologically inert.</p><h3>Inorganic Tin</h3><ul><li>Inorganic tin compounds are neurotoxic. They interfere with neuronal signaling, disrupt calcium homeostasis, and cause oxidative stress in nerve tissue.</li><li>Chronic exposure is associated with a condition historically called <em>stannosis</em> (tin pneumoconiosis) from inhaled tin oxide dust — though this was primarily seen in tin smelting, not soldering</li><li>The GI tract absorbs inorganic tin poorly from metallic form — but this changes dramatically when acids are involved</li></ul><h3>The Acid Flux Problem</h3><p>This is the part most safety guidance misses entirely.</p><ul><li>Acidic flux residues (RA, water-soluble, and to a lesser extent RMA) create an environment where tin dissolves into ionic form</li><li>Ionic tin (Sn²⁺) is far more bioavailable than metallic tin — it&apos;s water-soluble and readily absorbed through skin and the GI tract</li><li>Flux acids + tin on your hands = a delivery mechanism. You touch a flux-contaminated, tin-coated surface, the acid dissolves a thin layer of tin into ionic form, and now it absorbs through skin or transfers to food</li><li>This is <em>more</em> bioavailable than metallic lead on a surface, because lead doesn&apos;t have the same acid-dissolution pathway at room temperature from flux residues</li></ul><div class="callout key-principle"><div class="callout-title">The counterintuitive result</div><p>In a lead-free soldering environment with acidic flux residues, your actual <em>absorbed dose</em> of toxic metal may be higher than in a leaded environment — because the tin-flux combination is more bioavailable than lead particulate sitting on a surface. Going lead-free reduced one hazard and quietly increased another.</p></div><h3>Organotin Compounds</h3><ul><li>Organotin compounds (tin bonded to carbon — tributyltin, trimethyltin, etc.) are <em>extremely</em> neurotoxic, orders of magnitude more than inorganic tin</li><li>These are not directly produced during soldering, but flux decomposition products at high temperatures can theoretically create conditions for organotin formation</li><li>The practical risk from this during normal hand soldering is not well-characterized — but it&apos;s another reason fume extraction matters</li></ul><h3>Practical Implications</h3><ul><li><strong>Wash your hands just as carefully with lead-free solder as with leaded.</strong> The tin + flux residue on your hands is not harmless.</li><li><strong>Clean flux residues from boards and work surfaces.</strong> Active flux residues aren&apos;t just a corrosion risk — they&apos;re mobilizing tin into bioavailable form.</li><li><strong>Don&apos;t handle food with flux-contaminated hands.</strong> This applies regardless of alloy type.</li><li><strong>Nitrile gloves make more sense than most people think</strong> — especially when working with RA or water-soluble flux and handling freshly soldered boards before cleaning.</li></ul><div class="callout warning"><div class="callout-title">Why this isn&apos;t in most safety data sheets</div><p>SDS documents for solder wire and paste cover the <em>as-supplied</em> material — metallic tin, which has low acute toxicity and poor bioavailability. They don&apos;t address the interaction between flux acids and tin at the point of use, which is where the bioavailability changes. The OSHA PEL for tin (inorganic) is 2 mg/m³ — set based on metallic/oxide exposure, not ionic tin from acid dissolution.</p></div><div class="trace-divider"></div><h2>Rosin Flux &amp; Occupational Asthma</h2><p>This is the most serious long-term health risk in soldering. It deserves its own section.</p><ul><li>Colophony (rosin) fumes contain abietic acid and other resin acids that act as respiratory <em>sensitizers</em></li><li>Sensitization is cumulative and irreversible — once developed, even low-level exposure triggers asthma symptoms</li><li>Symptoms: coughing, wheezing, chest tightness, breathlessness — often worse at end of workday or after leaving work</li><li>Onset can take months to years of regular exposure</li><li>UK HSE data: colophony fume is one of the most common causes of occupational asthma in electronics manufacturing</li></ul><div class="callout warning"><div class="callout-title">The insidious part</div><p>You might solder for years with no problems, then gradually develop sensitivity. Once sensitized, the condition is permanent — you react to lower and lower concentrations. The only treatment is avoidance. Prevention through proper fume extraction is vastly better than treatment.</p></div><p>Exposure limits for rosin fumes are not well-defined in most jurisdictions. The UK HSE workplace exposure limit for rosin fume (as resin acids) is <strong>0.05 mg/m³</strong> (8-hr TWA) and <strong>0.15 mg/m³</strong> (15-min STEL). This is very low — reflecting how potent a sensitizer it is.</p><div class="trace-divider"></div><h2>First Aid</h2><h3>Burns</h3><ul><li>Run cool (not cold/ice) water over the burn for <strong>at least 10 minutes</strong></li><li>Do not apply butter, toothpaste, or other folk remedies</li><li>Small superficial burns: clean, apply burn gel or aloe, cover with non-stick dressing</li><li>Blistering, large area, or deep burns: seek medical attention</li><li>Molten solder on skin: it solidifies almost instantly. Don&apos;t try to wipe it off while hot — you&apos;ll spread it. Let it cool, then remove.</li></ul><h3>Eye Exposure</h3><ul><li>Flux splash or solder spatter in eyes: flush with clean water for 15 minutes</li><li>Seek medical attention even if it feels fine afterward — flux chemicals can cause delayed irritation</li></ul><h3>Fume Inhalation</h3><ul><li>Move to fresh air</li><li>Persistent coughing, wheezing, or difficulty breathing: seek medical attention</li><li>If you notice fume sensitivity developing (symptoms that correlate with soldering sessions), consult an occupational health specialist <em>before</em> it progresses</li></ul><div class="trace-divider"></div><h2>Quick Setup Checklist</h2><p>Before you start soldering, run through this:</p><ol><li>Fume extraction on and positioned close to work area?</li><li>Safety glasses on?</li><li>Iron in a stable holder?</li><li>Heat-resistant work surface?</li><li>No food or drink on the workbench?</li><li>Hands washed before eating/drinking after session?</li><li>If leaded solder: work area will be wiped down after?</li></ol><footer class="site-footer">SOLDER.LIBRARY — Lead-free soldering reference.</footer></div></main></div></body></html>

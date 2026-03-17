@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="dark" name="color-scheme" /><title>Level Up — SOLDER.LIBRARY</title><style>/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}
+
+/* === STYLE — typography, panels, components === */
+/* Loaded via <link>. Builds on variables/layout from base.css. */
+
+/* === PANELS === */
+.callout, .data-card, figure, details.fig, pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* === SIDEBAR DETAILS === */
+.sidebar-header {
+  padding: 0 var(--sp-lg) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+}
+.sidebar-logo {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-heading); text-decoration: none;
+}
+.sidebar-logo span { color: var(--text-dim); font-weight: 400; }
+.sidebar-section { padding: var(--sp-sm) var(--sp-lg); }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.sidebar-link {
+  display: block; padding: 0.2rem var(--sp-sm); font-size: 0.8rem;
+  color: var(--text-muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.sidebar-link.active {
+  color: var(--color-value);
+  background: color-mix(in srgb, var(--color-value) 6%, transparent);
+  border-left-color: var(--color-value);
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; line-height: 1.25; }
+
+h1 {
+  font-size: 1.6rem; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+h1::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 6rem; height: 2px; background: var(--color-trace);
+}
+h1 .accent { color: var(--color-heading); }
+
+h2 {
+  font-size: 1.15rem; margin-top: var(--sp-2xl); margin-bottom: var(--sp-sm);
+  color: var(--text); position: relative;
+}
+h2::before {
+  content: '// '; color: var(--text-dim);
+  font-family: var(--font-mono); font-weight: 400; font-size: 0.85em;
+}
+h2::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-hi) 0%, transparent 60%);
+}
+
+h3 { font-size: 0.95rem; margin-top: var(--sp-lg); margin-bottom: var(--sp-xs); color: var(--color-sub); }
+p { margin-bottom: var(--sp-md); font-size: 0.9rem; }
+a { color: var(--color-link); text-decoration: none; border-bottom: 1px solid transparent; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--color-value); font-style: normal; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.82em;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.1em 0.35em; color: var(--color-link);
+}
+pre { padding: var(--sp-md); overflow-x: auto; margin-bottom: var(--sp-lg); }
+pre code { background: none; border: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; margin: var(--sp-md) 0; font-size: 0.82rem; }
+thead { border-bottom: 2px solid var(--border-hi); }
+th {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); text-align: left; padding: var(--sp-xs) var(--sp-sm);
+}
+td { padding: var(--sp-xs) var(--sp-sm); border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-card); color: var(--text); }
+td.val  { color: var(--color-value); font-family: var(--font-mono); font-weight: 500; }
+td.good { color: var(--color-link); }
+td.warn { color: var(--color-value); }
+td.bad  { color: var(--color-danger); }
+
+/* === CALLOUTS === */
+.callout {
+  padding: var(--sp-sm) var(--sp-md); margin: var(--sp-md) 0;
+  border-left: 2px solid var(--_accent, var(--border)); font-size: 0.88rem;
+}
+.callout p { margin-bottom: var(--sp-xs); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-title {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp-xs); color: var(--_accent, var(--text-dim));
+}
+.callout.beginner      { --_accent: var(--color-link); }
+.callout.advanced      { --_accent: var(--color-value); }
+.callout.warning       { --_accent: var(--color-danger); }
+.callout.key-principle { --_accent: var(--color-trace); }
+
+/* === DATA CARDS === */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--sp-sm); margin: var(--sp-md) 0;
+}
+.data-card { padding: var(--sp-sm) var(--sp-md); position: relative; }
+.data-card-label {
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.data-card-value {
+  font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-value); line-height: 1.3;
+}
+.data-card-value .unit { font-size: 0.65em; color: var(--text-muted); font-weight: 400; }
+.data-card-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+a.data-card { text-decoration: none; display: block; color: inherit; border-bottom: 1px solid var(--border); }
+
+/* === TEMP BAR === */
+.temp-bar {
+  height: 4px; border-radius: 2px; margin: var(--sp-sm) 0; position: relative;
+  background: linear-gradient(90deg, var(--color-link) 0%, var(--color-value) 50%, var(--color-danger) 100%);
+}
+.temp-bar-marker { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 1px; }
+
+/* === LISTS === */
+ul, ol { margin-bottom: var(--sp-md); padding-left: var(--sp-lg); }
+li { margin-bottom: 0.1rem; color: var(--text-muted); font-size: 0.88rem; }
+li strong { color: var(--text); }
+ul { list-style: none; }
+ul li::before {
+  content: '>'; font-family: var(--font-mono); color: var(--color-trace);
+  display: inline-block; width: 1em; margin-left: -1em; font-weight: 700; font-size: 0.8em;
+}
+ol { list-style: none; counter-reset: item; }
+ol li { counter-increment: item; }
+ol li::before {
+  content: counter(item, decimal-leading-zero);
+  font-family: var(--font-mono); color: var(--text-dim);
+  font-size: 0.7em; font-weight: 700; margin-right: 0.5em;
+}
+
+/* === DEFINITION LISTS (glossary) === */
+dl { margin-bottom: var(--sp-lg); }
+dt {
+  font-weight: 700; font-size: 0.9rem; color: var(--color-heading);
+  margin-top: var(--sp-md); padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+dt:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+dd {
+  margin-left: 0; margin-top: var(--sp-xs);
+  font-size: 0.88rem; color: var(--text); line-height: 1.55;
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--border);
+}
+
+/* === FIGURE === */
+figure { margin: var(--sp-md) 0; overflow: hidden; }
+figure img { width: 100%; display: block; }
+figcaption {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);
+  padding: var(--sp-xs) var(--sp-sm); border-top: 1px solid var(--border);
+}
+
+/* === EXPANDABLE FIGURES === */
+details.fig { margin: var(--sp-md) 0; overflow: hidden; }
+details.fig summary {
+  padding: var(--sp-sm) var(--sp-md); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: var(--sp-sm);
+  user-select: none; list-style: none;
+}
+details.fig summary::-webkit-details-marker { display: none; }
+details.fig summary::before {
+  content: '\25b6'; font-size: 0.6em; color: var(--color-link);
+  display: inline-block;
+}
+details.fig .fig-content { padding: var(--sp-sm) var(--sp-md); border-top: 1px solid var(--border); }
+details.fig .fig-content img { max-width: 100%; display: block; border-radius: 2px; }
+details.fig .fig-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+details.fig .fig-grid img { max-width: 100%; display: block; border-radius: 2px; }
+
+/* === TRACE DIVIDER === */
+.trace-divider { height: 1px; margin: var(--sp-xl) 0; background: var(--border); position: relative; }
+.trace-divider::before {
+  content: ''; position: absolute; left: 0; top: -1px;
+  width: 4rem; height: 3px; background: var(--color-trace);
+  border-radius: 1px;
+}
+.trace-divider::after {
+  content: ''; position: absolute; left: 4rem; top: -3px;
+  width: 7px; height: 7px; background: var(--bg);
+  border: 2px solid var(--color-trace); border-radius: 50%;
+}
+
+/* === HOME LAYOUT === */
+.home-layout { }
+.home-content { }
+
+/* === KNOWLEDGE TREE === */
+.knowledge-tree {
+  position: relative;
+  width: 100%; max-width: 350px;
+  aspect-ratio: 350 / 580;
+  margin-top: var(--sp-xl);
+}
+.tree-canvas {
+  position: absolute; inset: 0;
+  width: 350px; height: 580px;
+  transform-origin: top left;
+}
+.tree-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.tree-edge {
+  fill: none; stroke: var(--color-trace); stroke-width: 2;
+  opacity: 0.8;
+}
+.tree-edge-glow {
+  filter: url(#tree-glow);
+}
+.tree-edge-glow path {
+  fill: none; stroke: var(--color-trace); stroke-width: 8;
+  opacity: 0.3;
+}
+.tree-node {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--color-trace); text-decoration: none;
+  border: 1px solid var(--color-trace); border-bottom: 1px solid var(--color-trace);
+  background: color-mix(in srgb, var(--color-trace) 8%, var(--bg));
+  padding: 3px 7px; border-radius: 3px;
+  /* Glow via outline — outline-color IS allowed to change on :visited */
+  outline: 4px solid color-mix(in srgb, var(--color-trace) 25%, transparent);
+  outline-offset: 2px;
+}
+.tree-node:visited {
+  color: var(--text-dim);
+  border-color: var(--border);
+  background-color: var(--bg-card);
+  outline-color: transparent;
+}
+
+/* Large screens: tree breaks out into right margin */
+@media (min-width: 102rem) {
+  .main-content:has(.knowledge-tree) { position: relative; }
+  .knowledge-tree {
+    position: absolute;
+    right: var(--sp-xl);
+    top: var(--sp-xl);
+    margin-top: 0;
+    width: 350px;
+  }
+}
+
+/* === FOOTER === */
+.site-footer {
+  border-top: 1px solid var(--border); padding: var(--sp-lg) 0; margin-top: var(--sp-xl);
+  text-align: center; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);
+}
+
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}
+</style></head><body><button class="sidebar-toggle" onclick="document.querySelector(&apos;.sidebar&apos;).classList.toggle(&apos;open&apos;)">= menu</button><div class="site-wrapper"><nav class="sidebar"><div class="sidebar-header"><a class="sidebar-logo" href="index.html">SOLDER<span>.LIBRARY</span></a></div><div class="sidebar-section"><div class="sidebar-section-title">Fundamentals</div><a class="sidebar-link" href="heat-science.html">Heat Science</a><a class="sidebar-link" href="flux.html">Flux</a><a class="sidebar-link" href="alloys.html">Alloys &amp; Temperatures</a><a class="sidebar-link" href="cleanliness.html">Cleanliness</a></div><div class="sidebar-section"><div class="sidebar-section-title">Technique</div><a class="sidebar-link" href="hand-soldering.html">Hand Soldering</a><a class="sidebar-link" href="hot-air.html">Hot Air Rework</a><a class="sidebar-link" href="smd-prototyping.html">SMD Prototyping</a><a class="sidebar-link" href="fixturing.html">Fixturing &amp; Workholding</a><a class="sidebar-link" href="joint-quality.html">Joint Quality</a></div><div class="sidebar-section"><div class="sidebar-section-title">Process</div><a class="sidebar-link" href="preheat.html">Preheat</a><a class="sidebar-link" href="reflow-profiles.html">Reflow Profiles</a><a class="sidebar-link" href="solder-paste.html">Solder Paste</a></div><div class="sidebar-section"><div class="sidebar-section-title">Deep Dives</div><a class="sidebar-link" href="metallurgy.html">Joint Metallurgy</a><a class="sidebar-link" href="tin-whiskers.html">Tin Whiskers</a></div><div class="sidebar-section"><div class="sidebar-section-title">Reference</div><a class="sidebar-link" href="safety.html">Safety &amp; PPE</a><a class="sidebar-link" href="standards.html">Standards (NASA/IPC)</a><a class="sidebar-link" href="troubleshooting.html">Troubleshooting</a><a class="sidebar-link" href="glossary.html">Glossary</a><a class="sidebar-link" href="sources.html">Sources</a></div></nav><main class="main-content"><div class="page-content"><h1>Level <span class="accent">Up</span></h1><p>You can solder. Maybe you&apos;ve built kits, done rework, or you solder at work. This path is about understanding <em>why</em> things work and pushing into advanced territory.</p><div class="trace-divider"></div><h2>The Physics You&apos;re Missing</h2><ol><li><a href="heat-science.html"><strong>Heat Science</strong></a> — You know heat matters. But do you know <em>why</em> solder flows toward heat? The Marangoni effect? Why lead-free has 14% higher surface tension? Why the +100°C rule exists? This page has the numbers.</li><li><a href="flux.html"><strong>Flux Deep Dive</strong></a> — IPC J-STD-004 classification system, activation temperatures, and why no-clean flux has a narrower effective window than rosin. The advanced callouts are for you.</li></ol><div class="trace-divider"></div><h2>Process Knowledge</h2><ol><li><a href="reflow-profiles.html"><strong>Reflow Profiles</strong></a> — The four zones, why the soak exists, time above liquidus, and what happens to IMC when you overshoot peak temperature.</li><li><a href="solder-paste.html"><strong>Solder Paste</strong></a> — Type 3 vs 4 vs 5 powder, area ratio rules, stencil thickness selection, and why smaller powder isn&apos;t always better.</li><li><a href="preheat.html"><strong>Preheat</strong></a> — Ramp rates, Tg limits, and when it&apos;s mandatory vs optional. The difference between a board preheater and hoping for the best.</li></ol><h2>Deep Dives</h2><ol><li><a href="metallurgy.html"><strong>Joint Metallurgy</strong></a> — What actually happens at the atomic level: intermetallic compounds, Kirkendall voiding, ENIG vs copper interfaces, black pad syndrome. Why your joints work — and why they sometimes don&apos;t.</li><li><a href="tin-whiskers.html"><strong>Tin Whiskers</strong></a> — Why satellites use leaded solder. Single-crystal tin filaments that grow from compressive stress and cause short circuits. The plasma cascade failure mode. The reason RoHS has exemptions.</li><li><a href="safety.html"><strong>Safety</strong></a> — Beyond the basics. Tin bioavailability from flux residues, rosin-induced occupational asthma, and why hand washing matters just as much with lead-free solder.</li></ol><h2>Standards &amp; Data</h2><ol><li><a href="standards.html"><strong>NASA/IPC Standards</strong></a> — What NASA requires for spaceflight solder joints. IPC-A-610 three-class system. The actual fill percentages and wetting angle requirements.</li><li><a href="alloys.html"><strong>Alloys</strong></a> — Full property comparison table: surface tension, shear strength, thermal/electrical conductivity. SAC305 vs SAC387 vs SAC105 vs SN100C vs Innolot.</li><li><a href="cleanliness.html"><strong>Cleanliness</strong></a> — Surface finishes, MSL ratings, contamination failure modes. Why a fingerprint on an OSP pad shows up as selective non-wetting after reflow.</li><li><a href="sources.html"><strong>Sources</strong></a> — PDFs worth reading: NIST solder database, Kester training docs, Bob Willis defect guides, the 1984 Klein Wassink textbook.</li></ol><div class="callout advanced"><div class="callout-title">The rabbit hole</div><p>If you want to go truly deep: download the NIST Lead-Free Solder Properties Database and the FCT &quot;Size Matters&quot; APEX 2019 paper from the Sources page. The NIST database has every mechanical, thermal, and physical property you could want. The FCT paper is the definitive work on solder paste powder classification.</p></div><footer class="site-footer">SOLDER.LIBRARY — Lead-free soldering reference.</footer></div></main></div></body></html>

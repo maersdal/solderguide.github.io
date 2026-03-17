@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="dark" name="color-scheme" /><title>Getting Started — SOLDER.LIBRARY</title><style>/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}
+
+/* === STYLE — typography, panels, components === */
+/* Loaded via <link>. Builds on variables/layout from base.css. */
+
+/* === PANELS === */
+.callout, .data-card, figure, details.fig, pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* === SIDEBAR DETAILS === */
+.sidebar-header {
+  padding: 0 var(--sp-lg) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+}
+.sidebar-logo {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-heading); text-decoration: none;
+}
+.sidebar-logo span { color: var(--text-dim); font-weight: 400; }
+.sidebar-section { padding: var(--sp-sm) var(--sp-lg); }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.sidebar-link {
+  display: block; padding: 0.2rem var(--sp-sm); font-size: 0.8rem;
+  color: var(--text-muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.sidebar-link.active {
+  color: var(--color-value);
+  background: color-mix(in srgb, var(--color-value) 6%, transparent);
+  border-left-color: var(--color-value);
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; line-height: 1.25; }
+
+h1 {
+  font-size: 1.6rem; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+h1::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 6rem; height: 2px; background: var(--color-trace);
+}
+h1 .accent { color: var(--color-heading); }
+
+h2 {
+  font-size: 1.15rem; margin-top: var(--sp-2xl); margin-bottom: var(--sp-sm);
+  color: var(--text); position: relative;
+}
+h2::before {
+  content: '// '; color: var(--text-dim);
+  font-family: var(--font-mono); font-weight: 400; font-size: 0.85em;
+}
+h2::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-hi) 0%, transparent 60%);
+}
+
+h3 { font-size: 0.95rem; margin-top: var(--sp-lg); margin-bottom: var(--sp-xs); color: var(--color-sub); }
+p { margin-bottom: var(--sp-md); font-size: 0.9rem; }
+a { color: var(--color-link); text-decoration: none; border-bottom: 1px solid transparent; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--color-value); font-style: normal; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.82em;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.1em 0.35em; color: var(--color-link);
+}
+pre { padding: var(--sp-md); overflow-x: auto; margin-bottom: var(--sp-lg); }
+pre code { background: none; border: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; margin: var(--sp-md) 0; font-size: 0.82rem; }
+thead { border-bottom: 2px solid var(--border-hi); }
+th {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); text-align: left; padding: var(--sp-xs) var(--sp-sm);
+}
+td { padding: var(--sp-xs) var(--sp-sm); border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-card); color: var(--text); }
+td.val  { color: var(--color-value); font-family: var(--font-mono); font-weight: 500; }
+td.good { color: var(--color-link); }
+td.warn { color: var(--color-value); }
+td.bad  { color: var(--color-danger); }
+
+/* === CALLOUTS === */
+.callout {
+  padding: var(--sp-sm) var(--sp-md); margin: var(--sp-md) 0;
+  border-left: 2px solid var(--_accent, var(--border)); font-size: 0.88rem;
+}
+.callout p { margin-bottom: var(--sp-xs); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-title {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp-xs); color: var(--_accent, var(--text-dim));
+}
+.callout.beginner      { --_accent: var(--color-link); }
+.callout.advanced      { --_accent: var(--color-value); }
+.callout.warning       { --_accent: var(--color-danger); }
+.callout.key-principle { --_accent: var(--color-trace); }
+
+/* === DATA CARDS === */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--sp-sm); margin: var(--sp-md) 0;
+}
+.data-card { padding: var(--sp-sm) var(--sp-md); position: relative; }
+.data-card-label {
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.data-card-value {
+  font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-value); line-height: 1.3;
+}
+.data-card-value .unit { font-size: 0.65em; color: var(--text-muted); font-weight: 400; }
+.data-card-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+a.data-card { text-decoration: none; display: block; color: inherit; border-bottom: 1px solid var(--border); }
+
+/* === TEMP BAR === */
+.temp-bar {
+  height: 4px; border-radius: 2px; margin: var(--sp-sm) 0; position: relative;
+  background: linear-gradient(90deg, var(--color-link) 0%, var(--color-value) 50%, var(--color-danger) 100%);
+}
+.temp-bar-marker { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 1px; }
+
+/* === LISTS === */
+ul, ol { margin-bottom: var(--sp-md); padding-left: var(--sp-lg); }
+li { margin-bottom: 0.1rem; color: var(--text-muted); font-size: 0.88rem; }
+li strong { color: var(--text); }
+ul { list-style: none; }
+ul li::before {
+  content: '>'; font-family: var(--font-mono); color: var(--color-trace);
+  display: inline-block; width: 1em; margin-left: -1em; font-weight: 700; font-size: 0.8em;
+}
+ol { list-style: none; counter-reset: item; }
+ol li { counter-increment: item; }
+ol li::before {
+  content: counter(item, decimal-leading-zero);
+  font-family: var(--font-mono); color: var(--text-dim);
+  font-size: 0.7em; font-weight: 700; margin-right: 0.5em;
+}
+
+/* === DEFINITION LISTS (glossary) === */
+dl { margin-bottom: var(--sp-lg); }
+dt {
+  font-weight: 700; font-size: 0.9rem; color: var(--color-heading);
+  margin-top: var(--sp-md); padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+dt:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+dd {
+  margin-left: 0; margin-top: var(--sp-xs);
+  font-size: 0.88rem; color: var(--text); line-height: 1.55;
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--border);
+}
+
+/* === FIGURE === */
+figure { margin: var(--sp-md) 0; overflow: hidden; }
+figure img { width: 100%; display: block; }
+figcaption {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);
+  padding: var(--sp-xs) var(--sp-sm); border-top: 1px solid var(--border);
+}
+
+/* === EXPANDABLE FIGURES === */
+details.fig { margin: var(--sp-md) 0; overflow: hidden; }
+details.fig summary {
+  padding: var(--sp-sm) var(--sp-md); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: var(--sp-sm);
+  user-select: none; list-style: none;
+}
+details.fig summary::-webkit-details-marker { display: none; }
+details.fig summary::before {
+  content: '\25b6'; font-size: 0.6em; color: var(--color-link);
+  display: inline-block;
+}
+details.fig .fig-content { padding: var(--sp-sm) var(--sp-md); border-top: 1px solid var(--border); }
+details.fig .fig-content img { max-width: 100%; display: block; border-radius: 2px; }
+details.fig .fig-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+details.fig .fig-grid img { max-width: 100%; display: block; border-radius: 2px; }
+
+/* === TRACE DIVIDER === */
+.trace-divider { height: 1px; margin: var(--sp-xl) 0; background: var(--border); position: relative; }
+.trace-divider::before {
+  content: ''; position: absolute; left: 0; top: -1px;
+  width: 4rem; height: 3px; background: var(--color-trace);
+  border-radius: 1px;
+}
+.trace-divider::after {
+  content: ''; position: absolute; left: 4rem; top: -3px;
+  width: 7px; height: 7px; background: var(--bg);
+  border: 2px solid var(--color-trace); border-radius: 50%;
+}
+
+/* === HOME LAYOUT === */
+.home-layout { }
+.home-content { }
+
+/* === KNOWLEDGE TREE === */
+.knowledge-tree {
+  position: relative;
+  width: 100%; max-width: 350px;
+  aspect-ratio: 350 / 580;
+  margin-top: var(--sp-xl);
+}
+.tree-canvas {
+  position: absolute; inset: 0;
+  width: 350px; height: 580px;
+  transform-origin: top left;
+}
+.tree-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.tree-edge {
+  fill: none; stroke: var(--color-trace); stroke-width: 2;
+  opacity: 0.8;
+}
+.tree-edge-glow {
+  filter: url(#tree-glow);
+}
+.tree-edge-glow path {
+  fill: none; stroke: var(--color-trace); stroke-width: 8;
+  opacity: 0.3;
+}
+.tree-node {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--color-trace); text-decoration: none;
+  border: 1px solid var(--color-trace); border-bottom: 1px solid var(--color-trace);
+  background: color-mix(in srgb, var(--color-trace) 8%, var(--bg));
+  padding: 3px 7px; border-radius: 3px;
+  /* Glow via outline — outline-color IS allowed to change on :visited */
+  outline: 4px solid color-mix(in srgb, var(--color-trace) 25%, transparent);
+  outline-offset: 2px;
+}
+.tree-node:visited {
+  color: var(--text-dim);
+  border-color: var(--border);
+  background-color: var(--bg-card);
+  outline-color: transparent;
+}
+
+/* Large screens: tree breaks out into right margin */
+@media (min-width: 102rem) {
+  .main-content:has(.knowledge-tree) { position: relative; }
+  .knowledge-tree {
+    position: absolute;
+    right: var(--sp-xl);
+    top: var(--sp-xl);
+    margin-top: 0;
+    width: 350px;
+  }
+}
+
+/* === FOOTER === */
+.site-footer {
+  border-top: 1px solid var(--border); padding: var(--sp-lg) 0; margin-top: var(--sp-xl);
+  text-align: center; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);
+}
+
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}
+</style></head><body><button class="sidebar-toggle" onclick="document.querySelector(&apos;.sidebar&apos;).classList.toggle(&apos;open&apos;)">= menu</button><div class="site-wrapper"><nav class="sidebar"><div class="sidebar-header"><a class="sidebar-logo" href="index.html">SOLDER<span>.LIBRARY</span></a></div><div class="sidebar-section"><div class="sidebar-section-title">Fundamentals</div><a class="sidebar-link" href="heat-science.html">Heat Science</a><a class="sidebar-link" href="flux.html">Flux</a><a class="sidebar-link" href="alloys.html">Alloys &amp; Temperatures</a><a class="sidebar-link" href="cleanliness.html">Cleanliness</a></div><div class="sidebar-section"><div class="sidebar-section-title">Technique</div><a class="sidebar-link" href="hand-soldering.html">Hand Soldering</a><a class="sidebar-link" href="hot-air.html">Hot Air Rework</a><a class="sidebar-link" href="smd-prototyping.html">SMD Prototyping</a><a class="sidebar-link" href="fixturing.html">Fixturing &amp; Workholding</a><a class="sidebar-link" href="joint-quality.html">Joint Quality</a></div><div class="sidebar-section"><div class="sidebar-section-title">Process</div><a class="sidebar-link" href="preheat.html">Preheat</a><a class="sidebar-link" href="reflow-profiles.html">Reflow Profiles</a><a class="sidebar-link" href="solder-paste.html">Solder Paste</a></div><div class="sidebar-section"><div class="sidebar-section-title">Deep Dives</div><a class="sidebar-link" href="metallurgy.html">Joint Metallurgy</a><a class="sidebar-link" href="tin-whiskers.html">Tin Whiskers</a></div><div class="sidebar-section"><div class="sidebar-section-title">Reference</div><a class="sidebar-link" href="safety.html">Safety &amp; PPE</a><a class="sidebar-link" href="standards.html">Standards (NASA/IPC)</a><a class="sidebar-link" href="troubleshooting.html">Troubleshooting</a><a class="sidebar-link" href="glossary.html">Glossary</a><a class="sidebar-link" href="sources.html">Sources</a></div></nav><main class="main-content"><div class="page-content"><h1>Getting <span class="accent">Started</span></h1><p>You&apos;ve never soldered, or you&apos;ve made some joints but aren&apos;t confident. This path will get you making solid, reliable connections in an afternoon.</p><div class="trace-divider"></div><h2>What Is Soldering?</h2><p>Soldering is joining two metal surfaces with a molten filler metal (solder) that melts at a lower temperature than the parts being joined. The solder melts, flows onto the metal surfaces, and when it cools, it forms a permanent electrical and mechanical connection.</p><p>In electronics, that means connecting component leads and terminations to copper pads on a circuit board (PCB). Every resistor, capacitor, and chip on a circuit board is soldered in place — sometimes hundreds or thousands of joints per board.</p><h3>The Three Ingredients</h3><ol><li><strong>Heat</strong> — from a soldering iron tip (300-400°C) or hot air. Melts the solder and activates the flux. <em>Heat the joint, not the solder</em> — solder flows toward the hottest part of the joint.</li><li><strong>Solder</strong> — a metal alloy (usually mostly tin) that melts at 217-227°C for lead-free. Comes as wire with flux inside, or as paste for surface-mount work. Forms the actual metallic bond.</li><li><strong>Flux</strong> — a chemical that cleans the metal surfaces during soldering. Copper oxidizes instantly at soldering temperatures — without flux, solder <em>will not bond</em> to the copper. The flux in your solder wire is a start, but you&apos;ll almost always need additional external flux from a pen or syringe.</li></ol><h3>What Are You Actually Doing?</h3><p>You&apos;re making a <strong>metallurgical bond</strong> — not just sticking things together. When molten solder touches clean copper, tin atoms from the solder diffuse into the copper and form a new compound (an intermetallic) at the interface. This is a chemical bond at the atomic level. That&apos;s why a soldered joint is both electrically conductive and mechanically strong.</p><h3>Where Soldering Is Used</h3><ul><li><strong>Electronics assembly</strong> — connecting components to circuit boards. From phones to satellites.</li><li><strong>Repair and rework</strong> — replacing failed components, fixing broken connections.</li><li><strong>Prototyping</strong> — building one-off circuits by hand before committing to production.</li><li><strong>Wire connections</strong> — joining wires to terminals, connectors, and other wires.</li><li><strong>Hobbyist projects</strong> — building kits, custom electronics, art installations, robots.</li></ul><h3>Two Types of Components</h3><p>Every technique on this site falls into one of two categories:</p><ul><li><strong>Through-hole</strong> — components with wire leads that poke through holes in the board. You solder from the back side. This is where everyone starts — bigger parts, easier to see, more forgiving.</li><li><strong>Surface mount (SMD)</strong> — components that sit flat on the board surface. No holes. Smaller parts, tighter spacing. Most modern electronics are surface mount. You&apos;ll get here once you&apos;re comfortable with through-hole.</li></ul><p>Don&apos;t know a term? The <a href="glossary.html">Glossary</a> defines every technical word used on this site.</p><div class="trace-divider"></div><h2>Read in This Order</h2><ol><li><a href="heat-science.html"><strong>Heat Science</strong></a> — Start here. Understanding heat is the one thing that makes everything else click. Learn why solder flows toward heat and why your iron is set 100°C above the solder&apos;s melting point.</li><li><a href="flux.html"><strong>Flux</strong></a> — The invisible essential. Without flux, nothing works. Learn what it does and why engineers who skip it get bad joints.</li><li><a href="hand-soldering.html"><strong>Hand Soldering</strong></a> — The actual technique. Step by step: clean, tin, heat pad, feed solder, remove. Plus tip selection and dwell time.</li><li><a href="joint-quality.html"><strong>Joint Quality</strong></a> — How to tell if your joint is good. What a proper fillet looks like, common defects, and the one thing lead-free joints do differently.</li><li><a href="troubleshooting.html"><strong>Troubleshooting</strong></a> — When things go wrong. Solder won&apos;t flow? Balling up? Cold joints? Work through the checklist.</li></ol><div class="trace-divider"></div><h2>What You Need</h2><table><thead><tr><th>Item</th><th>What to Search For</th><th>Cost</th><th>Why</th></tr></thead><tbody><tr><td><strong>Soldering station</strong></td><td>&quot;Hakko FX-888D&quot; or &quot;FNIRSI HS-01&quot; (portable) or &quot;Pinecil V2&quot;</td><td>$25-120</td><td>Must be temperature-controlled (you set a number, it holds it). Avoid unregulated irons — they have no temperature readout and swing wildly. The Hakko is the gold standard. Budget options like the FNIRSI or Pinecil are genuinely good.</td></tr><tr><td><strong>Chisel tip</strong></td><td>The tip that came with your iron is probably <a href="glossary.html#conical-tip">conical (pointed)</a> — replace it. Search your iron model + &quot;chisel tip&quot; or &quot;screwdriver tip&quot;, 2.4mm.</td><td>$5-15</td><td>The <a href="hand-soldering.html">single biggest improvement</a> you can make. Flat face = more heat transfer.</td></tr><tr><td><strong>Solder wire</strong></td><td>&quot;SAC305 solder wire 0.8mm flux core no-clean&quot; — Kester, AIM, or MG Chemicals</td><td>$10-20</td><td>Lead-free, 0.8mm diameter. The flux inside helps but is </td><td><em>not enough on its own</em></td><td> — you&apos;ll need external flux too.</td></tr><tr><td><strong>Flux pen</strong></td><td>&quot;No-clean flux pen&quot; — Kester #186, MG Chemicals 835-P, or Chip Quik</td><td>$8-12</td><td>Your solder wire has flux inside, but it&apos;s a tiny amount that burns off fast. External flux from a pen is needed for <em>almost every joint</em> — rework, oxidized surfaces, drag soldering, and any time the wire&apos;s flux isn&apos;t enough (which is most of the time).</td></tr><tr><td><strong>Brass wool tip cleaner</strong></td><td>&quot;Brass tip cleaner&quot; or &quot;brass wool soldering&quot; — comes in a metal tin</td><td>$5-10</td><td>Cleans the iron tip without cooling it. A wet sponge drops tip temp by 50-100°C every wipe.</td></tr><tr><td><strong>Solder wick</strong></td><td>&quot;Solder wick&quot; or &quot;desoldering braid&quot; — 2-3mm width</td><td>$5-8</td><td>For removing excess solder and fixing mistakes. You will make mistakes.</td></tr><tr><td><strong>Practice board</strong></td><td>&quot;Soldering practice kit&quot; on Amazon/AliExpress — look for through-hole kits</td><td>$3-10</td><td>Cheap boards with resistors, LEDs, and capacitors to solder. Your first 20 joints go here, not on something you care about.</td></tr></tbody></table><p><strong>Total: ~$60-175</strong> depending on iron choice. This setup handles all through-hole work and basic SMD.</p><div class="callout beginner"><div class="callout-title">The 30-minute test</div><p>Read Heat Science and Hand Soldering, then solder 20 through-hole joints on a practice board. If they all have smooth concave <a href="glossary.html#fillet">fillets</a> with &lt; 90° <a href="glossary.html#wetting-angle">wetting angle</a>, you&apos;re ready for real projects.</p></div><h2>Also Read</h2><ul><li><a href="safety.html"><strong>Safety &amp; PPE</strong></a> — fume extraction, hand washing, burn first aid. Read this before your first session.</li><li><a href="cleanliness.html"><strong>Cleanliness</strong></a> — why dirty pads won&apos;t solder and what to do about it.</li><li><a href="fixturing.html"><strong>Fixturing</strong></a> — you need both hands free. A $40 vise is the biggest quality upgrade after the iron itself.</li></ul><h2>When You&apos;re Ready For More</h2><p>Once you&apos;re comfortable with through-hole, explore:</p><ul><li><a href="alloys.html">Alloys</a> — understand what you&apos;re melting</li><li><a href="preheat.html">Preheat</a> — for boards that fight back</li><li><a href="hot-air.html">Hot Air</a> — for SMD components</li><li><a href="smd-prototyping.html">SMD Prototyping</a> — the full workflow from paste to reflow</li></ul><footer class="site-footer">SOLDER.LIBRARY — Lead-free soldering reference.</footer></div></main></div></body></html>

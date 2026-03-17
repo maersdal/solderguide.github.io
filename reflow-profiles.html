@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="dark" name="color-scheme" /><title>Reflow Profiles — SOLDER.LIBRARY</title><style>/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}
+
+/* === STYLE — typography, panels, components === */
+/* Loaded via <link>. Builds on variables/layout from base.css. */
+
+/* === PANELS === */
+.callout, .data-card, figure, details.fig, pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* === SIDEBAR DETAILS === */
+.sidebar-header {
+  padding: 0 var(--sp-lg) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+}
+.sidebar-logo {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-heading); text-decoration: none;
+}
+.sidebar-logo span { color: var(--text-dim); font-weight: 400; }
+.sidebar-section { padding: var(--sp-sm) var(--sp-lg); }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.sidebar-link {
+  display: block; padding: 0.2rem var(--sp-sm); font-size: 0.8rem;
+  color: var(--text-muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.sidebar-link.active {
+  color: var(--color-value);
+  background: color-mix(in srgb, var(--color-value) 6%, transparent);
+  border-left-color: var(--color-value);
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; line-height: 1.25; }
+
+h1 {
+  font-size: 1.6rem; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+h1::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 6rem; height: 2px; background: var(--color-trace);
+}
+h1 .accent { color: var(--color-heading); }
+
+h2 {
+  font-size: 1.15rem; margin-top: var(--sp-2xl); margin-bottom: var(--sp-sm);
+  color: var(--text); position: relative;
+}
+h2::before {
+  content: '// '; color: var(--text-dim);
+  font-family: var(--font-mono); font-weight: 400; font-size: 0.85em;
+}
+h2::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-hi) 0%, transparent 60%);
+}
+
+h3 { font-size: 0.95rem; margin-top: var(--sp-lg); margin-bottom: var(--sp-xs); color: var(--color-sub); }
+p { margin-bottom: var(--sp-md); font-size: 0.9rem; }
+a { color: var(--color-link); text-decoration: none; border-bottom: 1px solid transparent; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--color-value); font-style: normal; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.82em;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.1em 0.35em; color: var(--color-link);
+}
+pre { padding: var(--sp-md); overflow-x: auto; margin-bottom: var(--sp-lg); }
+pre code { background: none; border: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; margin: var(--sp-md) 0; font-size: 0.82rem; }
+thead { border-bottom: 2px solid var(--border-hi); }
+th {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); text-align: left; padding: var(--sp-xs) var(--sp-sm);
+}
+td { padding: var(--sp-xs) var(--sp-sm); border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-card); color: var(--text); }
+td.val  { color: var(--color-value); font-family: var(--font-mono); font-weight: 500; }
+td.good { color: var(--color-link); }
+td.warn { color: var(--color-value); }
+td.bad  { color: var(--color-danger); }
+
+/* === CALLOUTS === */
+.callout {
+  padding: var(--sp-sm) var(--sp-md); margin: var(--sp-md) 0;
+  border-left: 2px solid var(--_accent, var(--border)); font-size: 0.88rem;
+}
+.callout p { margin-bottom: var(--sp-xs); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-title {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp-xs); color: var(--_accent, var(--text-dim));
+}
+.callout.beginner      { --_accent: var(--color-link); }
+.callout.advanced      { --_accent: var(--color-value); }
+.callout.warning       { --_accent: var(--color-danger); }
+.callout.key-principle { --_accent: var(--color-trace); }
+
+/* === DATA CARDS === */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--sp-sm); margin: var(--sp-md) 0;
+}
+.data-card { padding: var(--sp-sm) var(--sp-md); position: relative; }
+.data-card-label {
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.data-card-value {
+  font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-value); line-height: 1.3;
+}
+.data-card-value .unit { font-size: 0.65em; color: var(--text-muted); font-weight: 400; }
+.data-card-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+a.data-card { text-decoration: none; display: block; color: inherit; border-bottom: 1px solid var(--border); }
+
+/* === TEMP BAR === */
+.temp-bar {
+  height: 4px; border-radius: 2px; margin: var(--sp-sm) 0; position: relative;
+  background: linear-gradient(90deg, var(--color-link) 0%, var(--color-value) 50%, var(--color-danger) 100%);
+}
+.temp-bar-marker { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 1px; }
+
+/* === LISTS === */
+ul, ol { margin-bottom: var(--sp-md); padding-left: var(--sp-lg); }
+li { margin-bottom: 0.1rem; color: var(--text-muted); font-size: 0.88rem; }
+li strong { color: var(--text); }
+ul { list-style: none; }
+ul li::before {
+  content: '>'; font-family: var(--font-mono); color: var(--color-trace);
+  display: inline-block; width: 1em; margin-left: -1em; font-weight: 700; font-size: 0.8em;
+}
+ol { list-style: none; counter-reset: item; }
+ol li { counter-increment: item; }
+ol li::before {
+  content: counter(item, decimal-leading-zero);
+  font-family: var(--font-mono); color: var(--text-dim);
+  font-size: 0.7em; font-weight: 700; margin-right: 0.5em;
+}
+
+/* === DEFINITION LISTS (glossary) === */
+dl { margin-bottom: var(--sp-lg); }
+dt {
+  font-weight: 700; font-size: 0.9rem; color: var(--color-heading);
+  margin-top: var(--sp-md); padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+dt:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+dd {
+  margin-left: 0; margin-top: var(--sp-xs);
+  font-size: 0.88rem; color: var(--text); line-height: 1.55;
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--border);
+}
+
+/* === FIGURE === */
+figure { margin: var(--sp-md) 0; overflow: hidden; }
+figure img { width: 100%; display: block; }
+figcaption {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);
+  padding: var(--sp-xs) var(--sp-sm); border-top: 1px solid var(--border);
+}
+
+/* === EXPANDABLE FIGURES === */
+details.fig { margin: var(--sp-md) 0; overflow: hidden; }
+details.fig summary {
+  padding: var(--sp-sm) var(--sp-md); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: var(--sp-sm);
+  user-select: none; list-style: none;
+}
+details.fig summary::-webkit-details-marker { display: none; }
+details.fig summary::before {
+  content: '\25b6'; font-size: 0.6em; color: var(--color-link);
+  display: inline-block;
+}
+details.fig .fig-content { padding: var(--sp-sm) var(--sp-md); border-top: 1px solid var(--border); }
+details.fig .fig-content img { max-width: 100%; display: block; border-radius: 2px; }
+details.fig .fig-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+details.fig .fig-grid img { max-width: 100%; display: block; border-radius: 2px; }
+
+/* === TRACE DIVIDER === */
+.trace-divider { height: 1px; margin: var(--sp-xl) 0; background: var(--border); position: relative; }
+.trace-divider::before {
+  content: ''; position: absolute; left: 0; top: -1px;
+  width: 4rem; height: 3px; background: var(--color-trace);
+  border-radius: 1px;
+}
+.trace-divider::after {
+  content: ''; position: absolute; left: 4rem; top: -3px;
+  width: 7px; height: 7px; background: var(--bg);
+  border: 2px solid var(--color-trace); border-radius: 50%;
+}
+
+/* === HOME LAYOUT === */
+.home-layout { }
+.home-content { }
+
+/* === KNOWLEDGE TREE === */
+.knowledge-tree {
+  position: relative;
+  width: 100%; max-width: 350px;
+  aspect-ratio: 350 / 580;
+  margin-top: var(--sp-xl);
+}
+.tree-canvas {
+  position: absolute; inset: 0;
+  width: 350px; height: 580px;
+  transform-origin: top left;
+}
+.tree-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.tree-edge {
+  fill: none; stroke: var(--color-trace); stroke-width: 2;
+  opacity: 0.8;
+}
+.tree-edge-glow {
+  filter: url(#tree-glow);
+}
+.tree-edge-glow path {
+  fill: none; stroke: var(--color-trace); stroke-width: 8;
+  opacity: 0.3;
+}
+.tree-node {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--color-trace); text-decoration: none;
+  border: 1px solid var(--color-trace); border-bottom: 1px solid var(--color-trace);
+  background: color-mix(in srgb, var(--color-trace) 8%, var(--bg));
+  padding: 3px 7px; border-radius: 3px;
+  /* Glow via outline — outline-color IS allowed to change on :visited */
+  outline: 4px solid color-mix(in srgb, var(--color-trace) 25%, transparent);
+  outline-offset: 2px;
+}
+.tree-node:visited {
+  color: var(--text-dim);
+  border-color: var(--border);
+  background-color: var(--bg-card);
+  outline-color: transparent;
+}
+
+/* Large screens: tree breaks out into right margin */
+@media (min-width: 102rem) {
+  .main-content:has(.knowledge-tree) { position: relative; }
+  .knowledge-tree {
+    position: absolute;
+    right: var(--sp-xl);
+    top: var(--sp-xl);
+    margin-top: 0;
+    width: 350px;
+  }
+}
+
+/* === FOOTER === */
+.site-footer {
+  border-top: 1px solid var(--border); padding: var(--sp-lg) 0; margin-top: var(--sp-xl);
+  text-align: center; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);
+}
+
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}
+</style></head><body><button class="sidebar-toggle" onclick="document.querySelector(&apos;.sidebar&apos;).classList.toggle(&apos;open&apos;)">= menu</button><div class="site-wrapper"><nav class="sidebar"><div class="sidebar-header"><a class="sidebar-logo" href="index.html">SOLDER<span>.LIBRARY</span></a></div><div class="sidebar-section"><div class="sidebar-section-title">Fundamentals</div><a class="sidebar-link" href="heat-science.html">Heat Science</a><a class="sidebar-link" href="flux.html">Flux</a><a class="sidebar-link" href="alloys.html">Alloys &amp; Temperatures</a><a class="sidebar-link" href="cleanliness.html">Cleanliness</a></div><div class="sidebar-section"><div class="sidebar-section-title">Technique</div><a class="sidebar-link" href="hand-soldering.html">Hand Soldering</a><a class="sidebar-link" href="hot-air.html">Hot Air Rework</a><a class="sidebar-link" href="smd-prototyping.html">SMD Prototyping</a><a class="sidebar-link" href="fixturing.html">Fixturing &amp; Workholding</a><a class="sidebar-link" href="joint-quality.html">Joint Quality</a></div><div class="sidebar-section"><div class="sidebar-section-title">Process</div><a class="sidebar-link" href="preheat.html">Preheat</a><a class="sidebar-link active" href="reflow-profiles.html">Reflow Profiles</a><a class="sidebar-link" href="solder-paste.html">Solder Paste</a></div><div class="sidebar-section"><div class="sidebar-section-title">Deep Dives</div><a class="sidebar-link" href="metallurgy.html">Joint Metallurgy</a><a class="sidebar-link" href="tin-whiskers.html">Tin Whiskers</a></div><div class="sidebar-section"><div class="sidebar-section-title">Reference</div><a class="sidebar-link" href="safety.html">Safety &amp; PPE</a><a class="sidebar-link" href="standards.html">Standards (NASA/IPC)</a><a class="sidebar-link" href="troubleshooting.html">Troubleshooting</a><a class="sidebar-link" href="glossary.html">Glossary</a><a class="sidebar-link" href="sources.html">Sources</a></div></nav><main class="main-content"><div class="page-content"><h1>Reflow <span class="accent">Profiles</span></h1><p>The temperature-over-time curve that makes or breaks every SMD joint. Understanding the four zones is the difference between good boards and scrap.</p><div class="trace-divider"></div><h2>The Four Zones</h2><p>Every reflow profile has the same structure. The numbers change per alloy, but the zones don&apos;t.</p><table><thead><tr><th>Zone</th><th>What Happens</th><th>Temp (SAC305)</th><th>Duration</th><th>Ramp</th></tr></thead><tbody><tr><td><strong>1. Preheat</strong></td><td>Board heats from room temp. Solvents in paste begin to evaporate.</td><td class="val">25 → 150-180°C</td><td>60-90s</td><td>1.5-3°C/s (max 3)</td></tr><tr><td><strong>2. Soak</strong></td><td>Temperature equalizes across the board. Flux activates, cleans oxide. All pads reach roughly the same temp.</td><td class="val">150-200°C</td><td>60-120s</td><td>Hold or slow ramp</td></tr><tr><td><strong>3. Reflow</strong></td><td>Solder melts (crosses liquidus). IMC forms at solder-pad interface. Components self-align via surface tension.</td><td class="val">Peak 235-255°C</td><td>TAL: <strong>30-60s</strong></td><td>~2°C/s up</td></tr><tr><td><strong>4. Cooling</strong></td><td>Solder solidifies. Controlled cooling prevents thermal shock and produces good grain structure.</td><td>Peak → ambient</td><td>—</td><td class="val">3-6°C/s (4 rec.)</td></tr></tbody></table><details class="fig"><summary>Figure: Standard reflow soldering profile</summary><div class="fig-content"><img alt="Standard reflow soldering profile" src="assets/compuphase-reflow-profiles/006.png" /><div class="fig-caption">Four-zone reflow profile with labeled transitions. Source: CompuPhase</div></div></details><details class="fig"><summary>Figure: Decision points in a reflow profile</summary><div class="fig-content"><img alt="Decision points in a reflow profile" src="assets/compuphase-reflow-profiles/011.png" /><div class="fig-caption">Key parameters and decision points when optimizing a profile. Source: CompuPhase</div></div></details><h2>Zone 1: Preheat — Driving Off Moisture</h2><p>The board and components have absorbed moisture from the air. Water boils at 100°C. If you ramp straight to reflow (&gt;217°C), that trapped moisture expands explosively:</p><ul><li><strong>Solder spattering</strong> — steam escaping through molten paste throws solder balls across the board</li><li><strong>Popcorning</strong> — moisture inside plastic IC packages vaporizes, cracking the package from the inside (delamination). This is what MSL (Moisture Sensitivity Level) ratings are about.</li><li><strong>Voiding</strong> — steam trapped under components creates voids in the solder joint</li></ul><p>The preheat zone (25°C → 150-180°C at 1.5-3°C/s) gives moisture time to escape <em>before</em> the solder melts. This is why the ramp rate has a maximum — too fast and the water can&apos;t escape gently.</p><div class="callout advanced"><div class="callout-title">Moisture Sensitivity Levels (MSL)</div><p>IPC/JEDEC J-STD-020 rates components MSL 1 through 6, with floor life ranging from unlimited (MSL 1) to mandatory bake before every reflow (MSL 6). Components that have exceeded their floor life must be baked at 125°C for 24-48 hours before reflow. For the full MSL table and bake requirements, see <a href="cleanliness.html">Cleanliness — Moisture Sensitivity</a>.</p><p>For hobby work: if your ICs came in a sealed bag with a desiccant, and you opened it recently, you&apos;re fine. If the parts have been sitting in open air for months — preheat slowly and consider a bake.</p></div><h2>Zone 2: Soak — Flux Activation and Equalization</h2><p>The soak zone (150-200°C, 60-120 seconds) has two critical jobs:</p><h3>Job 1: Flux Activation</h3><p>Flux activators become chemically active in this temperature range. They dissolve metal oxides on the pads and component terminations, exposing clean metal for the solder to bond to.</p><ul><li>Rosin flux fully melts at 172-175°C — right in the soak zone</li><li>The flux has a <em>working window</em> of roughly 3 minutes from activation to burnout</li><li>If the soak is too long or too hot, flux exhausts before reaching reflow — joints won&apos;t wet</li><li>If the soak is too short, flux hasn&apos;t had time to clean all surfaces — uneven wetting</li></ul><h3>Job 2: Temperature Equalization</h3><p>Different parts of the board have different thermal masses:</p><ul><li>A 0402 resistor on a thin trace reaches soak temperature almost instantly</li><li>A QFN on a ground plane might lag by 20-30°C</li><li>A BGA with hundreds of solder balls is a massive thermal reservoir</li><li>A board edge heats faster than the center (more exposure to oven air)</li></ul><p>The soak holds everything at 150-200°C long enough for the lagging parts to catch up. When you exit the soak into the reflow ramp, the <em>entire board</em> should be within 10°C of the same temperature. This is what prevents tombstoning — both pads on a passive reflow at the same time instead of one before the other.</p><div class="callout warning"><div class="callout-title">Soak too long</div><p>A common mistake: extending the soak to &quot;be safe.&quot; Over 120 seconds in the soak zone causes:</p><ul><li>Flux exhaustion — activators consumed before reflow</li><li>Tin oxidation — exposed tin on component terminations re-oxidizes</li><li>Reduced process window — less flux activity remaining means you need a more precise peak</li></ul></div><h2>Zone 3: Reflow — What Happens at Peak</h2><h3>The First 5 Seconds Above Liquidus</h3><p>As the solder crosses its melting point (217°C for SAC305), several things happen simultaneously:</p><ol><li><strong>Solder coalesces</strong> — the paste powder particles merge into a continuous liquid pool</li><li><strong>Wetting begins</strong> — molten solder contacts the clean pad surface (thanks to flux) and starts forming intermetallic compounds</li><li><strong>Self-alignment</strong> — surface tension of the molten solder pulls components toward the center of their pads. This corrects minor placement errors (up to ~50% misalignment on passives).</li><li><strong>Outgassing completes</strong> — any remaining volatiles escape through the molten solder</li></ol><h3>Peak Temperature vs Time</h3><p>The peak temperature and time at peak interact:</p><table><thead><tr><th>Peak Temp</th><th>Time at Peak</th><th>Result</th></tr></thead><tbody><tr><td class="bad">Too low (&lt;235°C for SAC305)</td><td>Any</td><td>Incomplete wetting. Cold joints on components with higher thermal mass.</td></tr><tr><td class="good">Optimal (240-250°C)</td><td>10-15s</td><td>Full wetting. Thin, uniform IMC layer. Strong joints.</td></tr><tr><td class="warn">High (250-255°C)</td><td>10-15s</td><td>Acceptable. IMC grows faster but still within spec if TAL is short.</td></tr><tr><td class="bad">Too high (&gt;255°C)</td><td>&gt;15s</td><td>Excessive IMC growth. Component damage risk. Pad dissolution accelerates.</td></tr></tbody></table><p>The relationship is inverse: if you <em>must</em> go hotter (to reflow a difficult joint), keep the time shorter. If you keep the peak modest, you have more time budget.</p><h3>Pad Dissolution</h3><p>Molten solder dissolves copper. At reflow temperatures, the dissolution rate is:</p><ul><li>~0.05 μm/s at 240°C for SAC305</li><li>~0.08 μm/s at 260°C</li><li>Standard copper plating is 25-35 μm thick (1 oz copper)</li></ul><p>At 240°C with a 60-second TAL, you dissolve about 3 μm — under 10% of the copper thickness. Safe. But with multiple rework cycles, each dissolving another 3 μm, you can thin the pad dangerously. This is why there&apos;s a practical limit of 3 rework cycles.</p><h2>Zone 4: Cooling — Not Just &quot;Turning Off the Heat&quot;</h2><h3>Why Cooling Rate Matters</h3><p>The grain structure of solidified solder depends on cooling rate:</p><table><thead><tr><th>Cooling Rate</th><th>Grain Structure</th><th>Result</th></tr></thead><tbody><tr><td class="good">3-6°C/s (controlled)</td><td>Fine-grained</td><td>Strong, ductile joints. Good fatigue resistance.</td></tr><tr><td class="warn">1-2°C/s (slow)</td><td>Large-grained</td><td>Joints look duller/rougher. Slightly weaker. More susceptible to fatigue.</td></tr><tr><td class="bad">&lt;1°C/s (very slow)</td><td>Coarse, columnar grains</td><td>Weak joints. Visible grain boundaries. Poor reliability.</td></tr><tr><td class="bad">&gt;8°C/s (too fast)</td><td>Fine but stressed</td><td>Thermal shock risk. PCB warping. Component cracking.</td></tr></tbody></table><h3>Practical Cooling</h3><ul><li><strong>Reflow oven:</strong> built-in cooling zone with fans. Set to 4°C/s.</li><li><strong>Hot air rework:</strong> remove heat source, let cool naturally. A gentle fan at a distance is fine.</li><li><strong>Hot plate:</strong> slide the board off the hot surface onto a room-temperature surface.</li></ul><div class="callout warning"><div class="callout-title">Never quench</div><p>Don&apos;t blow compressed air onto a hot board. Don&apos;t drop it onto a cold metal plate. The thermal shock can crack ceramic capacitors, delaminate BGAs, and warp the PCB. Controlled cooling means <em>predictable, gradual</em> — not fast.</p></div><div class="trace-divider"></div><h2>PCB Heat Distribution</h2><p>Not all parts of the board heat at the same rate. Understanding <em>why</em> is the key to avoiding profile-related defects.</p><h3>Component Thermal Mass</h3><table><thead><tr><th>Component</th><th>Thermal Mass</th><th>Behavior in Profile</th></tr></thead><tbody><tr><td>0402 resistor</td><td>Tiny</td><td>Follows the oven air temperature almost exactly. First to reflow.</td></tr><tr><td>0805/1206 passives</td><td>Small</td><td>Slight lag behind air temp. Reflows within seconds of smaller parts.</td></tr><tr><td>QFP-48 IC</td><td>Medium</td><td>Body acts as heat reservoir. Legs reflow first, then center catches up.</td></tr><tr><td>QFN with thermal pad</td><td>Medium-high</td><td>Ground pad is a heat sink connected to copper pour. <em>Lags significantly.</em></td></tr><tr><td>BGA-256</td><td>High</td><td>Hundreds of solder balls + package body. Slowest to reach reflow.</td></tr><tr><td>Aluminum electrolytic cap</td><td>High</td><td>Large thermal mass, plus heat-sensitive. Often hand-soldered after reflow.</td></tr><tr><td>Metal shield/can</td><td>Very high</td><td>Massive heat sink. May need extended soak or localized preheat.</td></tr></tbody></table><h3>Board Geometry Effects</h3><ul><li><strong>Board edges heat faster</strong> — more exposed surface area to oven airflow. Center of the board lags.</li><li><strong>Ground planes absorb heat</strong> — internal copper layers act as heat spreaders. Areas over ground planes lag behind areas over signal-only layers.</li><li><strong>Thick boards lag</strong> — 2.4mm boards take significantly longer to equalize than 1.6mm boards.</li><li><strong>Panelized boards</strong> — boards in the center of a panel heat slower than boards at the edge.</li></ul><h3>The Delta-T Problem</h3><p>The temperature difference between the hottest point and coldest point on the board at the moment you enter reflow. This number determines whether all joints reflow properly.</p><table><thead><tr><th>Delta-T at Reflow</th><th>Result</th></tr></thead><tbody><tr><td class="good">&lt;10°C</td><td>All joints reflow within seconds of each other. Minimal tombstoning risk.</td></tr><tr><td class="warn">10-20°C</td><td>Some lag. Larger components may have cold joints while small ones are fine.</td></tr><tr><td class="bad">&gt;20°C</td><td>Problem. The coldest joints may not reflow at all, or you must push peak so high that the hottest parts overheat.</td></tr></tbody></table><p>Reducing delta-T: longer soak, slower ramp, bottom-side preheat, better oven airflow calibration.</p><div class="trace-divider"></div><h2>The Flux Timeline</h2><p>Flux has a finite working life once activated. Here&apos;s what happens through the profile:</p><table><thead><tr><th>Time / Temp</th><th>Flux State</th><th>What&apos;s Happening</th></tr></thead><tbody><tr><td>Room temp</td><td>Inert</td><td>Flux is dissolved in solvent. No chemical activity.</td></tr><tr><td>60-70°C</td><td>Softening</td><td>Rosin begins to soften. Solvents start evaporating.</td></tr><tr><td>100-140°C</td><td>Activating</td><td>Solvents mostly gone. Activators begin reacting with metal oxides.</td></tr><tr><td>150-200°C (soak)</td><td class="good">Peak activity</td><td>Oxide removal in full swing. Clean metal surfaces exposed. Protective blanket forming.</td></tr><tr><td>200-217°C (ramp)</td><td>Working hard</td><td>Activators being consumed. Clock is ticking.</td></tr><tr><td>&gt;217°C (reflow)</td><td>Depleting</td><td>Remaining activators consumed rapidly. Solder wets the now-clean surfaces.</td></tr><tr><td>&gt;250°C</td><td class="warn">Charring</td><td>Flux residue begins to polymerize/char. If flux was exhausted before reflow, you get dry joints.</td></tr><tr><td>&gt;300°C</td><td class="bad">Destroyed</td><td>Flux is completely carbonized. Black residue. No more chemical activity.</td></tr></tbody></table><div class="callout key-principle"><div class="callout-title">The 3-minute rule</div><p>From flux activation (~100°C) to the end of reflow, you have roughly 3 minutes of useful flux life. If your preheat + soak + ramp takes longer than that, the flux will be exhausted before the solder melts. This is the primary constraint on total profile time.</p></div><div class="trace-divider"></div><h2>Peak Temperature</h2><p>Peak = melting point + 20-40°C. Enough to ensure full reflow, not so much that you damage components.</p><table><thead><tr><th>Alloy</th><th>Melting Point</th><th>Peak Range</th><th>Absolute Max</th></tr></thead><tbody><tr><td>SAC305</td><td class="val">217°C</td><td class="val">237-257°C</td><td>260°C (component limit)</td></tr><tr><td>SAC387</td><td class="val">217°C</td><td class="val">237-257°C</td><td>260°C</td></tr><tr><td>SN100C</td><td class="val">227°C</td><td class="val">247-260°C</td><td>260°C component limit per J-STD-020</td></tr><tr><td>Sn42/Bi58</td><td class="val">138°C</td><td class="val">158-178°C</td><td>Much lower — check component compatibility</td></tr></tbody></table><h2>Time Above Liquidus (TAL)</h2><p>The total time the solder is molten. This is the most critical parameter after peak temperature.</p><table><thead><tr><th>TAL</th><th>Result</th></tr></thead><tbody><tr><td class="good">30-60 seconds</td><td>Optimal. Good IMC formation, complete wetting, no damage.</td></tr><tr><td class="warn">60-90 seconds</td><td>Acceptable but pushing it. IMC layer grows thicker.</td></tr><tr><td class="bad">&gt;90 seconds</td><td>Excessive IMC growth → brittle joints. Pad dissolution risk. Component damage risk.</td></tr><tr><td class="bad">&lt;20 seconds</td><td>Insufficient wetting. Cold joints. Solder may not fully coalesce.</td></tr></tbody></table><div class="callout advanced"><div class="callout-title">What happens inside the joint during TAL</div><p>When solder is molten on a copper pad, tin atoms diffuse into the copper and form intermetallic compounds (Cu₆Sn₅ and Cu₃Sn). A thin, uniform IMC layer (1-3 μm) is <em>good</em> — it&apos;s the metallurgical bond. A thick, uneven IMC layer (&gt;5 μm) is brittle and will crack under thermal cycling. The IMC grows with time and temperature — this is why TAL and peak temp have upper limits.</p></div><h2>Profile Shapes</h2><h3>Soaking / Trapezoidal</h3><p>Gradual preheat → flat soak → ramp to peak → cool. The soak zone is 60-120 seconds at 150-200°C.</p><ul><li><strong>Best for:</strong> complex boards with BGAs and mixed component sizes</li><li><strong>Why:</strong> the soak equalizes the entire board so all joints reflow within seconds of each other</li><li><strong>Drawback:</strong> longer cycle time, more flux consumed during soak</li></ul><h3>Tent / Triangular</h3><p>Steady ramp from room temp to peak, then cool. No flat soak zone.</p><ul><li><strong>Best for:</strong> simple boards without large thermal-mass components</li><li><strong>Why:</strong> faster cycle, less flux degradation</li><li><strong>Drawback:</strong> components with different thermal masses hit reflow at different times → tombstoning risk</li></ul><details class="fig"><summary>Figure: Profile with slanted soak phase</summary><div class="fig-content"><img alt="Profile with a slanted soak phase" src="assets/compuphase-reflow-profiles/014.png" /><div class="fig-caption">Variation with a slanted soak — common in tent/triangular profiles. Source: CompuPhase</div></div></details><h2>What Goes Wrong</h2><table><thead><tr><th>Problem</th><th>Likely Profile Issue</th><th>Fix</th></tr></thead><tbody><tr><td>Cold joints on large components (BGAs, shields)</td><td>Not enough soak — big parts lag behind</td><td>Extend soak to 90-120s. Increase preheat.</td></tr><tr><td>Tombstoning on small passives</td><td>Uneven reflow — one pad melts before the other</td><td>Longer soak to equalize. Or switch to trapezoidal profile.</td></tr><tr><td>Solder balls / spattering</td><td>Solvents in paste didn&apos;t fully evaporate during preheat</td><td>Slower preheat ramp. Extend soak time.</td></tr><tr><td>Dull, grainy joints (not the normal lead-free look)</td><td>Cooling too slow → large grain structure</td><td>Increase cooling rate to 4-6°C/s. Add cooling fans.</td></tr><tr><td>Brittle joints that crack in thermal cycling</td><td>Excessive TAL or peak temp → thick IMC</td><td>Reduce peak by 5-10°C. Shorten TAL to 30-45s.</td></tr><tr><td>Voiding under QFN/BGA thermal pads</td><td>Profile issue + paste issue combined</td><td>Extend soak to let volatiles escape. Optimize paste — see <a href="solder-paste.html">Solder Paste</a>.</td></tr><tr><td>Components shifted/rotated</td><td>Too much vibration during cooling, or uneven paste</td><td>Ensure oven belt is smooth. Check paste deposit consistency.</td></tr></tbody></table><p>For BGA-specific hot air rework profiles and starting parameters, see <a href="hot-air.html">Hot Air Rework — Starting Profiles</a>.</p><h2>Profiling in Practice</h2><h3>Measuring Your Profile</h3><ol><li>Attach K-type thermocouple to a representative pad (tape or high-temp solder)</li><li>Place <em>multiple</em> TCs if possible — one on the smallest component, one on the largest, one near board center, one near edge</li><li>Run the oven and log temperature vs time</li><li>The <em>delta</em> between your hottest and coldest TC at reflow should be &lt;10°C. If larger, extend soak.</li><li>Peak should be 20-40°C above liquidus at the <em>coldest</em> point</li></ol><div class="callout advanced"><div class="callout-title">Process window</div><p>Your process window is the range of peak temps and TAL values that produce acceptable joints. A wide window (e.g., 237-257°C peak, 30-60s TAL) means the process is robust. A narrow window means any variation causes defects. If you&apos;re borderline, tweak the profile to center yourself in the window — don&apos;t ride the edge.</p></div><footer class="site-footer">SOLDER.LIBRARY — Lead-free soldering reference.</footer></div></main></div></body></html>

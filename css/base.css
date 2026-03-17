@@ -1,0 +1,99 @@
+/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}

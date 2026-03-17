@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="dark" name="color-scheme" /><title>Glossary — SOLDER.LIBRARY</title><style>/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}
+
+/* === STYLE — typography, panels, components === */
+/* Loaded via <link>. Builds on variables/layout from base.css. */
+
+/* === PANELS === */
+.callout, .data-card, figure, details.fig, pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* === SIDEBAR DETAILS === */
+.sidebar-header {
+  padding: 0 var(--sp-lg) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+}
+.sidebar-logo {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-heading); text-decoration: none;
+}
+.sidebar-logo span { color: var(--text-dim); font-weight: 400; }
+.sidebar-section { padding: var(--sp-sm) var(--sp-lg); }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.sidebar-link {
+  display: block; padding: 0.2rem var(--sp-sm); font-size: 0.8rem;
+  color: var(--text-muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.sidebar-link.active {
+  color: var(--color-value);
+  background: color-mix(in srgb, var(--color-value) 6%, transparent);
+  border-left-color: var(--color-value);
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; line-height: 1.25; }
+
+h1 {
+  font-size: 1.6rem; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+h1::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 6rem; height: 2px; background: var(--color-trace);
+}
+h1 .accent { color: var(--color-heading); }
+
+h2 {
+  font-size: 1.15rem; margin-top: var(--sp-2xl); margin-bottom: var(--sp-sm);
+  color: var(--text); position: relative;
+}
+h2::before {
+  content: '// '; color: var(--text-dim);
+  font-family: var(--font-mono); font-weight: 400; font-size: 0.85em;
+}
+h2::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-hi) 0%, transparent 60%);
+}
+
+h3 { font-size: 0.95rem; margin-top: var(--sp-lg); margin-bottom: var(--sp-xs); color: var(--color-sub); }
+p { margin-bottom: var(--sp-md); font-size: 0.9rem; }
+a { color: var(--color-link); text-decoration: none; border-bottom: 1px solid transparent; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--color-value); font-style: normal; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.82em;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.1em 0.35em; color: var(--color-link);
+}
+pre { padding: var(--sp-md); overflow-x: auto; margin-bottom: var(--sp-lg); }
+pre code { background: none; border: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; margin: var(--sp-md) 0; font-size: 0.82rem; }
+thead { border-bottom: 2px solid var(--border-hi); }
+th {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); text-align: left; padding: var(--sp-xs) var(--sp-sm);
+}
+td { padding: var(--sp-xs) var(--sp-sm); border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-card); color: var(--text); }
+td.val  { color: var(--color-value); font-family: var(--font-mono); font-weight: 500; }
+td.good { color: var(--color-link); }
+td.warn { color: var(--color-value); }
+td.bad  { color: var(--color-danger); }
+
+/* === CALLOUTS === */
+.callout {
+  padding: var(--sp-sm) var(--sp-md); margin: var(--sp-md) 0;
+  border-left: 2px solid var(--_accent, var(--border)); font-size: 0.88rem;
+}
+.callout p { margin-bottom: var(--sp-xs); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-title {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp-xs); color: var(--_accent, var(--text-dim));
+}
+.callout.beginner      { --_accent: var(--color-link); }
+.callout.advanced      { --_accent: var(--color-value); }
+.callout.warning       { --_accent: var(--color-danger); }
+.callout.key-principle { --_accent: var(--color-trace); }
+
+/* === DATA CARDS === */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--sp-sm); margin: var(--sp-md) 0;
+}
+.data-card { padding: var(--sp-sm) var(--sp-md); position: relative; }
+.data-card-label {
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.data-card-value {
+  font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-value); line-height: 1.3;
+}
+.data-card-value .unit { font-size: 0.65em; color: var(--text-muted); font-weight: 400; }
+.data-card-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+a.data-card { text-decoration: none; display: block; color: inherit; border-bottom: 1px solid var(--border); }
+
+/* === TEMP BAR === */
+.temp-bar {
+  height: 4px; border-radius: 2px; margin: var(--sp-sm) 0; position: relative;
+  background: linear-gradient(90deg, var(--color-link) 0%, var(--color-value) 50%, var(--color-danger) 100%);
+}
+.temp-bar-marker { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 1px; }
+
+/* === LISTS === */
+ul, ol { margin-bottom: var(--sp-md); padding-left: var(--sp-lg); }
+li { margin-bottom: 0.1rem; color: var(--text-muted); font-size: 0.88rem; }
+li strong { color: var(--text); }
+ul { list-style: none; }
+ul li::before {
+  content: '>'; font-family: var(--font-mono); color: var(--color-trace);
+  display: inline-block; width: 1em; margin-left: -1em; font-weight: 700; font-size: 0.8em;
+}
+ol { list-style: none; counter-reset: item; }
+ol li { counter-increment: item; }
+ol li::before {
+  content: counter(item, decimal-leading-zero);
+  font-family: var(--font-mono); color: var(--text-dim);
+  font-size: 0.7em; font-weight: 700; margin-right: 0.5em;
+}
+
+/* === DEFINITION LISTS (glossary) === */
+dl { margin-bottom: var(--sp-lg); }
+dt {
+  font-weight: 700; font-size: 0.9rem; color: var(--color-heading);
+  margin-top: var(--sp-md); padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+dt:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+dd {
+  margin-left: 0; margin-top: var(--sp-xs);
+  font-size: 0.88rem; color: var(--text); line-height: 1.55;
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--border);
+}
+
+/* === FIGURE === */
+figure { margin: var(--sp-md) 0; overflow: hidden; }
+figure img { width: 100%; display: block; }
+figcaption {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);
+  padding: var(--sp-xs) var(--sp-sm); border-top: 1px solid var(--border);
+}
+
+/* === EXPANDABLE FIGURES === */
+details.fig { margin: var(--sp-md) 0; overflow: hidden; }
+details.fig summary {
+  padding: var(--sp-sm) var(--sp-md); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: var(--sp-sm);
+  user-select: none; list-style: none;
+}
+details.fig summary::-webkit-details-marker { display: none; }
+details.fig summary::before {
+  content: '\25b6'; font-size: 0.6em; color: var(--color-link);
+  display: inline-block;
+}
+details.fig .fig-content { padding: var(--sp-sm) var(--sp-md); border-top: 1px solid var(--border); }
+details.fig .fig-content img { max-width: 100%; display: block; border-radius: 2px; }
+details.fig .fig-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+details.fig .fig-grid img { max-width: 100%; display: block; border-radius: 2px; }
+
+/* === TRACE DIVIDER === */
+.trace-divider { height: 1px; margin: var(--sp-xl) 0; background: var(--border); position: relative; }
+.trace-divider::before {
+  content: ''; position: absolute; left: 0; top: -1px;
+  width: 4rem; height: 3px; background: var(--color-trace);
+  border-radius: 1px;
+}
+.trace-divider::after {
+  content: ''; position: absolute; left: 4rem; top: -3px;
+  width: 7px; height: 7px; background: var(--bg);
+  border: 2px solid var(--color-trace); border-radius: 50%;
+}
+
+/* === HOME LAYOUT === */
+.home-layout { }
+.home-content { }
+
+/* === KNOWLEDGE TREE === */
+.knowledge-tree {
+  position: relative;
+  width: 100%; max-width: 350px;
+  aspect-ratio: 350 / 580;
+  margin-top: var(--sp-xl);
+}
+.tree-canvas {
+  position: absolute; inset: 0;
+  width: 350px; height: 580px;
+  transform-origin: top left;
+}
+.tree-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.tree-edge {
+  fill: none; stroke: var(--color-trace); stroke-width: 2;
+  opacity: 0.8;
+}
+.tree-edge-glow {
+  filter: url(#tree-glow);
+}
+.tree-edge-glow path {
+  fill: none; stroke: var(--color-trace); stroke-width: 8;
+  opacity: 0.3;
+}
+.tree-node {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--color-trace); text-decoration: none;
+  border: 1px solid var(--color-trace); border-bottom: 1px solid var(--color-trace);
+  background: color-mix(in srgb, var(--color-trace) 8%, var(--bg));
+  padding: 3px 7px; border-radius: 3px;
+  /* Glow via outline — outline-color IS allowed to change on :visited */
+  outline: 4px solid color-mix(in srgb, var(--color-trace) 25%, transparent);
+  outline-offset: 2px;
+}
+.tree-node:visited {
+  color: var(--text-dim);
+  border-color: var(--border);
+  background-color: var(--bg-card);
+  outline-color: transparent;
+}
+
+/* Large screens: tree breaks out into right margin */
+@media (min-width: 102rem) {
+  .main-content:has(.knowledge-tree) { position: relative; }
+  .knowledge-tree {
+    position: absolute;
+    right: var(--sp-xl);
+    top: var(--sp-xl);
+    margin-top: 0;
+    width: 350px;
+  }
+}
+
+/* === FOOTER === */
+.site-footer {
+  border-top: 1px solid var(--border); padding: var(--sp-lg) 0; margin-top: var(--sp-xl);
+  text-align: center; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);
+}
+
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}
+</style></head><body><button class="sidebar-toggle" onclick="document.querySelector(&apos;.sidebar&apos;).classList.toggle(&apos;open&apos;)">= menu</button><div class="site-wrapper"><nav class="sidebar"><div class="sidebar-header"><a class="sidebar-logo" href="index.html">SOLDER<span>.LIBRARY</span></a></div><div class="sidebar-section"><div class="sidebar-section-title">Fundamentals</div><a class="sidebar-link" href="heat-science.html">Heat Science</a><a class="sidebar-link" href="flux.html">Flux</a><a class="sidebar-link" href="alloys.html">Alloys &amp; Temperatures</a><a class="sidebar-link" href="cleanliness.html">Cleanliness</a></div><div class="sidebar-section"><div class="sidebar-section-title">Technique</div><a class="sidebar-link" href="hand-soldering.html">Hand Soldering</a><a class="sidebar-link" href="hot-air.html">Hot Air Rework</a><a class="sidebar-link" href="smd-prototyping.html">SMD Prototyping</a><a class="sidebar-link" href="fixturing.html">Fixturing &amp; Workholding</a><a class="sidebar-link" href="joint-quality.html">Joint Quality</a></div><div class="sidebar-section"><div class="sidebar-section-title">Process</div><a class="sidebar-link" href="preheat.html">Preheat</a><a class="sidebar-link" href="reflow-profiles.html">Reflow Profiles</a><a class="sidebar-link" href="solder-paste.html">Solder Paste</a></div><div class="sidebar-section"><div class="sidebar-section-title">Deep Dives</div><a class="sidebar-link" href="metallurgy.html">Joint Metallurgy</a><a class="sidebar-link" href="tin-whiskers.html">Tin Whiskers</a></div><div class="sidebar-section"><div class="sidebar-section-title">Reference</div><a class="sidebar-link" href="safety.html">Safety &amp; PPE</a><a class="sidebar-link" href="standards.html">Standards (NASA/IPC)</a><a class="sidebar-link" href="troubleshooting.html">Troubleshooting</a><a class="sidebar-link active" href="glossary.html">Glossary</a><a class="sidebar-link" href="sources.html">Sources</a></div></nav><main class="main-content"><div class="page-content"><h1><span class="accent">Glossary</span></h1><p>Terms used throughout this site. Bookmark this page.</p><div class="trace-divider"></div><h2>The Board</h2><dl><dt id="pcb">PCB (Printed Circuit Board)</dt><dd>The board itself. Layers of copper traces sandwiched between layers of insulating material (usually <a href="#fr4">FR4</a>). Components are soldered to pads on the surface. Also called a &quot;board&quot; throughout this site.</dd><dt id="fr4">FR4</dt><dd>The most common PCB material. A fiberglass-reinforced epoxy laminate — it&apos;s the green (or red, blue, black) board you&apos;re soldering on. &quot;FR&quot; stands for Flame Retardant. FR4 has a <a href="#tg">glass transition temperature</a> of 130-180°C depending on grade.</dd><dt id="pad">Pad (Land)</dt><dd>A small exposed copper area on the PCB that a component is soldered to. Through-hole pads have a hole in the center for a component lead. SMD pads are flat copper areas on the surface. &quot;Land&quot; and &quot;pad&quot; mean the same thing — IPC prefers &quot;land&quot; but everyone says &quot;pad.&quot;</dd><dt id="trace">Trace</dt><dd>A thin copper line on the PCB that connects one pad to another. The &quot;wires&quot; of a circuit board. Traces carry signals and power between components.</dd><dt id="barrel">Barrel (Plated Through-Hole)</dt><dd>The copper-plated inside wall of a hole in the PCB. When you solder a through-hole component, solder fills the barrel, connecting the pad on top to the pad on the bottom. Also called a &quot;via&quot; when it connects layers without a component lead passing through.</dd><dt id="via">Via</dt><dd>A plated hole connecting copper layers inside the PCB. Like a <a href="#barrel">barrel</a> but without a component lead — just a copper tube through the board. Used to route traces between layers.</dd><dt id="annular-ring">Annular Ring</dt><dd>The ring of copper pad surrounding a drilled hole. If the drill is off-center, the annular ring is thinner on one side — IPC sets minimums per class.</dd><dt id="thermal-relief">Thermal Relief</dt><dd>A pad pattern that restricts heat flow between the pad and a large copper pour. Instead of the pad connecting directly to the copper plane, it connects through 3-4 narrow &quot;spokes.&quot; This makes the pad possible to solder by hand — without thermal relief, the copper plane sucks heat away faster than your iron can deliver it. See <a href="heat-science.html">Heat Science</a>.</dd><dt id="ground-plane">Ground Plane (Copper Pour)</dt><dd>A large area of copper on one or more PCB layers, usually connected to ground. Acts as a massive heat sink during soldering — pads connected to ground planes are the hardest to solder because heat drains away through the copper.</dd><dt id="solder-mask">Solder Mask</dt><dd>The colored coating (usually green) over the PCB that covers everything except the pads. Prevents solder from flowing where it shouldn&apos;t and protects traces from oxidation and shorts.</dd><dt id="silkscreen">Silkscreen</dt><dd>The white printed text and symbols on the PCB. Shows component outlines, reference designators (R1, C5, U3), polarity marks, and pin 1 indicators. Your guide to what goes where.</dd><dt id="tg">Tg (Glass Transition Temperature)</dt><dd>The temperature at which FR4 softens from rigid to rubbery. Standard FR4: 130-140°C. High-Tg FR4: 170-180°C. Above Tg, the board can deform, delaminate, and pads can lift more easily. This is why <a href="preheat.html">preheat temperature</a> has an upper limit.</dd><dt id="surface-finish">Surface Finish</dt><dd>A coating applied to exposed copper pads to prevent oxidation and ensure solderability. Common finishes: <a href="metallurgy.html">HASL, ENIG, OSP, immersion silver, immersion tin</a>. Each has different shelf life, solderability, and cost.</dd></dl><div class="trace-divider"></div><h2>Components</h2><dl><dt id="through-hole">Through-Hole (THT)</dt><dd>A component mounting style where wire leads pass <em>through</em> holes in the PCB and are soldered on the other side. Resistors with long legs, DIP chips, pin headers — these are through-hole. Easier to solder by hand than SMD. Also called &quot;through-hole technology&quot; (THT).</dd><dt id="smd">SMD / SMT (Surface Mount)</dt><dd>Components that sit on the surface of the PCB without leads passing through holes. SMD = Surface Mount Device (the component). SMT = Surface Mount Technology (the process). Smaller than through-hole, used in virtually all modern electronics. Requires different techniques — see <a href="hand-soldering.html">Hand Soldering — SMD</a> and <a href="smd-prototyping.html">SMD Prototyping</a>.</dd><dt id="lead">Lead (Component Lead)</dt><dd>The metal wire or pin extending from a component. Pronounced &quot;leed&quot; (not &quot;led&quot;). Through-hole components have long leads that go through the board. SMD components have short leads or flat terminations that sit on the pad surface.</dd><dt id="termination">Termination</dt><dd>The solderable metal surface on an SMD component — the part that gets soldered to the pad. On a chip resistor, the terminations are the metallic caps on each end. On a QFP, the terminations are the bent leads.</dd><dt id="pin-1">Pin 1</dt><dd>The reference pin on an IC (integrated circuit). Marked by a dot, notch, or bevel on the package. Must match the pin 1 indicator on the PCB silkscreen. Getting pin 1 wrong means the chip is rotated — usually fatal to the component.</dd></dl><h3>Package Sizes — Passives</h3><p>Chip resistors and capacitors are named by their size in imperial thousandths of an inch (length × width):</p><table><thead><tr><th>Package</th><th>Size (mm)</th><th>Roughly...</th><th>Hand Solderable?</th></tr></thead><tbody><tr><td>0201</td><td class="val">0.6 × 0.3</td><td>Grain of salt</td><td class="bad">Microscope + tweezers. Expert only.</td></tr><tr><td>0402</td><td class="val">1.0 × 0.5</td><td>Grain of sand</td><td class="warn">Doable with practice, fine tip, and magnification.</td></tr><tr><td>0603</td><td class="val">1.6 × 0.8</td><td>Small ant</td><td>Yes, with tweezers and good light.</td></tr><tr><td>0805</td><td class="val">2.0 × 1.25</td><td>Grain of rice</td><td class="good">Comfortable for most people. Good starting size for SMD.</td></tr><tr><td>1206</td><td class="val">3.2 × 1.6</td><td>Small lentil</td><td class="good">Easy. Big enough to grab with tweezers without swearing.</td></tr><tr><td>2512</td><td class="val">6.3 × 3.2</td><td>Small pea</td><td class="good">Large. Usually power resistors.</td></tr></tbody></table><h3>Package Types — ICs</h3><table><thead><tr><th>Package</th><th>What It Looks Like</th><th>Leads</th><th>Hand Solderable?</th></tr></thead><tbody><tr><td><strong>DIP / PDIP</strong></td><td>Rectangular with two rows of through-hole legs</td><td>Through-hole, 2.54mm pitch</td><td class="good">Yes — through-hole. The classic beginner IC package.</td></tr><tr><td><strong>SOIC</strong></td><td>Small rectangular, leads on two sides</td><td>Gull-wing, 1.27mm pitch</td><td class="good">Yes — iron or drag soldering.</td></tr><tr><td><strong>TSSOP</strong></td><td>Thin version of SOIC</td><td>Gull-wing, 0.65mm pitch</td><td>Yes — drag soldering recommended.</td></tr><tr><td><strong>QFP</strong></td><td>Square, leads on all four sides</td><td>Gull-wing, 0.4-0.8mm pitch</td><td>Yes — </td><td><a href="hand-soldering.html">drag soldering</a></td><td>. Fine-pitch needs practice.</td></tr><tr><td><strong>QFN / DFN</strong></td><td>Square/rectangular, pads underneath — no visible leads</td><td>Flat pads, hidden under chip</td><td class="warn">Hot air or reflow only. Can&apos;t reach pads with an iron. See <a href="smd-prototyping.html">SMD Prototyping</a>.</td></tr><tr><td><strong>BGA</strong></td><td>Grid of solder balls underneath</td><td>Solder balls, hidden under chip</td><td class="warn">Hot air with preheat. See <a href="hot-air.html">Hot Air — BGA Rework</a>.</td></tr><tr><td><strong>SOT-23</strong></td><td>Tiny 3-6 pin transistor/regulator package</td><td>Gull-wing, small</td><td class="good">Yes — small but manageable with a fine tip.</td></tr></tbody></table><div class="trace-divider"></div><h2>Soldering</h2><dl><dt id="fillet">Fillet</dt><dd>The smooth, concave ramp of solder that forms between a component lead and a pad. A good fillet looks like the base of a volcano — solder slopes smoothly from the lead down to the pad surface. The shape and angle of the fillet tells you whether the joint is properly wetted. See <a href="joint-quality.html">Joint Quality</a>.</dd><dt id="wetting">Wetting</dt><dd>When molten solder flows onto and bonds to a metal surface. Good wetting means the solder spreads and adheres — you see a thin, smooth layer conforming to the surface. Bad wetting means the solder balls up and doesn&apos;t bond, like water on a waxed car. Wetting requires clean metal (hence <a href="flux.html">flux</a>) and adequate heat.</dd><dt id="wetting-angle">Wetting Angle (Contact Angle)</dt><dd>The angle where the solder fillet meets the pad surface. Below 90° = solder is wetting the surface (good). Below 30° = excellent wetting. Above 90° = solder is balling up, not bonding (defect). See <a href="joint-quality.html">Joint Quality — Wetting Angle</a>.</dd><dt id="reflow">Reflow</dt><dd>Melting solder to form or reform a joint. In SMD assembly: solder paste is printed onto pads, components are placed, then the whole board is heated until the paste melts (&quot;reflows&quot;) and forms joints. Also used as a verb: &quot;reflow the joint&quot; means remelt it.</dd><dt id="dwell-time">Dwell Time</dt><dd>How long the iron tip (or heat source) stays on the joint. For hand soldering: 2-5 seconds. More than 5 seconds means you need more heat, not more time.</dd><dt id="cold-joint">Cold Joint</dt><dd>A joint that never reached proper reflow temperature. Looks dull, grainy, and convex (balled up) instead of smooth and concave. Electrically unreliable — may work now and fail later. Fix by adding flux and reheating. See <a href="troubleshooting.html">Troubleshooting</a>.</dd><dt id="bridge">Bridge (Solder Bridge)</dt><dd>An unintended connection of solder between two adjacent pads or pins. A short circuit. Fix with flux + solder wick, or flux + drag a clean tip through the bridge.</dd><dt id="tombstoning">Tombstoning</dt><dd>When a small SMD component stands up vertically on one end during reflow. One pad melts before the other, and surface tension pulls the component upright like a tombstone. Caused by uneven heating — <a href="preheat.html">preheat</a> prevents it.</dd><dt id="desoldering">Desoldering</dt><dd>Removing solder from a joint — to remove a component, fix a bridge, or redo a bad joint. Tools: <a href="hand-soldering.html">solder wick (braid) and solder sucker</a>.</dd><dt id="tinning">Tinning</dt><dd>Coating a surface with a thin layer of solder. You tin wire ends, iron tips, and pads. Tinning protects against oxidation and makes the next soldering step easier — two pre-tinned surfaces join with less heat and less flux than two bare surfaces.</dd><dt id="drag-soldering">Drag Soldering</dt><dd>A technique for soldering fine-pitch IC pins. Load the tip with solder, flood the pins with flux, and drag the tip slowly along the row of pins. Surface tension separates the solder between pins. See <a href="hand-soldering.html">Hand Soldering — Drag Soldering</a>.</dd></dl><div class="trace-divider"></div><h2>Materials</h2><dl><dt id="flux">Flux</dt><dd>A chemical agent that removes metal oxides, reduces surface tension, and enables solder to bond to metal. Without flux, solder will not wet copper. Present inside flux-core solder wire, but almost always needed as an additional external application. See <a href="flux.html">Flux</a>.</dd><dt id="solder">Solder</dt><dd>The metal alloy that forms the joint. Lead-free solder (SAC305) is 96.5% tin, 3% silver, 0.5% copper — melts at 217°C. Traditional leaded solder (Sn63/Pb37) melts at 183°C. See <a href="alloys.html">Alloys</a>.</dd><dt id="solder-paste">Solder Paste</dt><dd>Tiny balls of solder powder suspended in flux. Applied to pads (via stencil or syringe), components are placed on top, then the whole board is heated to melt the paste into joints. The standard method for SMD assembly. See <a href="solder-paste.html">Solder Paste</a>.</dd><dt id="solder-wick">Solder Wick (Braid)</dt><dd>Braided copper ribbon used to remove solder. Place it on the joint, press your iron on top — the wick absorbs molten solder by capillary action. Essential rework tool.</dd><dt id="no-clean">No-Clean</dt><dd>A type of flux (or solder paste) whose residue can be left on the board without cleaning. The residue is designed to be non-corrosive and electrically inert. &quot;No-clean&quot; means cleaning is optional for most applications — not that the residue is beneficial. Must still be cleaned if conformal coating will be applied.</dd><dt id="conformal-coating">Conformal Coating</dt><dd>A thin protective layer (acrylic, urethane, or silicone) applied over a finished PCB assembly. Protects against moisture, dust, chemicals, and short circuits. If you&apos;re applying conformal coating, all flux residue must be cleaned first — the coating won&apos;t adhere to flux.</dd><dt id="rohs">RoHS</dt><dd>Restriction of Hazardous Substances — an EU directive that restricts lead (and other materials) in electronics. This is why most modern electronics use lead-free solder. Some applications (aerospace, medical implants) are exempt. See <a href="tin-whiskers.html">Tin Whiskers — RoHS Exemptions</a>.</dd></dl><div class="trace-divider"></div><h2>Equipment</h2><dl><dt id="chisel-tip">Chisel Tip</dt><dd>A soldering iron tip shaped like a flat screwdriver head. The flat face provides maximum contact area with the joint — more contact = more heat transfer. <strong>This is the default tip for almost all work.</strong> See <a href="hand-soldering.html">Hand Soldering — Tip Shape Selection</a>.</dd><dt id="conical-tip">Conical Tip</dt><dd>A pointed soldering iron tip. Ships with most irons but is the <em>worst</em> general-purpose tip — the point contact transfers almost no heat. Replace with a <a href="#chisel-tip">chisel tip</a> immediately.</dd><dt id="brass-wool">Brass Wool</dt><dd>A coil of fine brass wire used to clean the soldering iron tip. Wipe the tip across it to remove oxidation and flux residue without cooling the tip (unlike a wet sponge, which drops tip temperature by 50-100°C). Also called a &quot;brass tip cleaner&quot; or &quot;tip cleaning wire.&quot;</dd><dt id="thermal-shunt">Thermal Shunt</dt><dd>A clip (often an alligator clip or small heatsink) placed between the iron and a heat-sensitive component to absorb excess heat. Used when soldering near plastic connectors, LEDs, and semiconductors that can be damaged by prolonged heat.</dd><dt id="stencil">Stencil</dt><dd>A thin sheet of stainless steel or kapton with laser-cut holes matching the PCB&apos;s pad pattern. Used to apply solder paste evenly to all pads at once. Squeegee paste across the stencil, lift it off, and every pad has a precise paste deposit. See <a href="smd-prototyping.html">SMD Prototyping</a>.</dd><dt id="preheater">Preheater</dt><dd>A device that warms the PCB from below before you solder from above. Brings the board to 100-150°C so your iron or hot air only needs to deliver the last portion of heat. Reduces thermal shock, activates flux early, and makes ground plane pads possible to solder. See <a href="preheat.html">Preheat</a>.</dd></dl><div class="trace-divider"></div><h2>Process &amp; Measurement</h2><dl><dt id="liquidus">Liquidus</dt><dd>The temperature above which the alloy is completely liquid. For SAC305: 217-220°C. Above liquidus, solder flows. Below liquidus, it&apos;s solid (or in the mushy zone for non-eutectic alloys).</dd><dt id="solidus">Solidus</dt><dd>The temperature below which the alloy is completely solid. For eutectic alloys (like Sn63/Pb37), solidus equals liquidus — the alloy melts/freezes at a single temperature. For non-eutectic alloys, there&apos;s a range between solidus and liquidus called the &quot;mushy zone.&quot;</dd><dt id="eutectic">Eutectic</dt><dd>An alloy composition that melts at a single temperature (not a range). Transitions sharply between solid and liquid with no &quot;mushy&quot; partly-solid state. Sn63/Pb37 (183°C) and SN100C (227°C) are eutectic. SAC305 is near-eutectic (very narrow mushy zone). See <a href="alloys.html">Alloys</a>.</dd><dt id="tal">TAL (Time Above Liquidus)</dt><dd>The total time solder spends in the molten state during reflow. Optimal: 30-60 seconds. Too short: incomplete wetting. Too long: excessive intermetallic growth and pad dissolution. See <a href="reflow-profiles.html">Reflow Profiles</a>.</dd><dt id="imc">IMC (Intermetallic Compound)</dt><dd>A new crystalline compound (Cu₆Sn₅, Cu₃Sn) that forms at the boundary between solder and copper during soldering. This is the actual metallurgical bond — the reason the solder sticks. A thin IMC layer (1-3 μm) is good. A thick layer (&gt;5 μm) is brittle. See <a href="metallurgy.html">Joint Metallurgy</a>.</dd><dt id="msl">MSL (Moisture Sensitivity Level)</dt><dd>A rating (1-6) indicating how much moisture a plastic IC package can absorb before risking damage during reflow. MSL 1 = no concerns. MSL 3+ = must be reflowed within days of opening the sealed bag, or baked first. See <a href="cleanliness.html">Cleanliness — Moisture Sensitivity</a>.</dd><dt id="ipc">IPC</dt><dd>The industry standards body for electronics manufacturing. IPC standards define how to solder, how to inspect joints, and what&apos;s acceptable. Key standards: J-STD-001 (soldering process), A-610 (visual inspection), J-STD-004 (flux classification). See <a href="standards.html">Standards</a>.</dd><dt id="class-1-2-3">Class 1 / 2 / 3</dt><dd>IPC&apos;s three product classes. Class 1: consumer electronics (least strict). Class 2: industrial, telecom (moderate). Class 3: aerospace, military, medical (strictest — 100% barrel fill, full wetting, 10-30X inspection). See <a href="joint-quality.html">Joint Quality — IPC-A-610</a>.</dd></dl><footer class="site-footer">SOLDER.LIBRARY — Lead-free soldering reference.</footer></div></main></div></body></html>

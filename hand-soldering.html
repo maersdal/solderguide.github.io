@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1" name="viewport" /><meta content="dark" name="color-scheme" /><title>Hand Soldering — SOLDER.LIBRARY</title><style>/* === BASE — variables, reset, layout skeleton === */
+/* Inlined into <head> at build time for instant first paint. */
+
+:root {
+  --_bg:       #1b1b2a;
+  --_surface:  #161624;
+  --_card:     #22223a;
+  --_card-hi:  #2a2a44;
+  --_line:     #33335a;
+  --_line-hi:  #444478;
+  --_mint:     #00ffb3;
+  --_yellow:   #ffea00;
+  --_pink:     #ff007a;
+  --_purple:   #c14dff;
+  --_text-1:   #e4e4f0;
+  --_text-2:   #9090b0;
+  --_text-3:   #606080;
+
+  --bg:            var(--_bg);
+  --bg-surface:    var(--_surface);
+  --bg-card:       var(--_card);
+  --bg-card-hover: var(--_card-hi);
+  --border:        var(--_line);
+  --border-hi:     var(--_line-hi);
+
+  --color-link:    var(--_mint);
+  --color-value:   var(--_yellow);
+  --color-heading: var(--_pink);
+  --color-sub:     var(--_purple);
+  --color-danger:  var(--_pink);
+  --color-trace:   var(--_mint);
+
+  --text:          var(--_text-1);
+  --text-muted:    var(--_text-2);
+  --text-dim:      var(--_text-3);
+
+  color-scheme: dark;
+
+  --font-body: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --sp-xs: 0.15rem;
+  --sp-sm: 0.35rem;
+  --sp-md: 0.7rem;
+  --sp-lg: 1rem;
+  --sp-xl: 1.5rem;
+  --sp-2xl: 2.2rem;
+
+  --content-width: 54rem;
+  --sidebar-width: 15rem;
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+@media (min-width: 1080px) { html { font-size: 16px; } }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-sub) 3%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* === LAYOUT === */
+.site-wrapper { display: flex; min-height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); flex: 1; min-width: 0; overflow-x: clip; }
+.page-content { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-xl); }
+
+/* === SIDEBAR === */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-width); height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: var(--sp-lg) 0;
+  z-index: 100;
+}
+
+/* === MOBILE === */
+.sidebar-toggle { display: none; }
+@media (max-width: 54rem) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: block; position: fixed; top: var(--sp-sm); left: var(--sp-sm); z-index: 200;
+    background: var(--bg-surface); border: 1px solid var(--color-link); color: var(--color-link);
+    padding: var(--sp-xs) var(--sp-sm); border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer;
+  }
+  .main-content { margin-left: 0; }
+  .page-content { padding: var(--sp-xl) var(--sp-md); padding-top: 3rem; }
+}
+
+/* === STYLE — typography, panels, components === */
+/* Loaded via <link>. Builds on variables/layout from base.css. */
+
+/* === PANELS === */
+.callout, .data-card, figure, details.fig, pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* === SIDEBAR DETAILS === */
+.sidebar-header {
+  padding: 0 var(--sp-lg) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+}
+.sidebar-logo {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-heading); text-decoration: none;
+}
+.sidebar-logo span { color: var(--text-dim); font-weight: 400; }
+.sidebar-section { padding: var(--sp-sm) var(--sp-lg); }
+.sidebar-section-title {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.1rem;
+}
+.sidebar-link {
+  display: block; padding: 0.2rem var(--sp-sm); font-size: 0.8rem;
+  color: var(--text-muted); text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.sidebar-link.active {
+  color: var(--color-value);
+  background: color-mix(in srgb, var(--color-value) 6%, transparent);
+  border-left-color: var(--color-value);
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; line-height: 1.25; }
+
+h1 {
+  font-size: 1.6rem; margin-bottom: var(--sp-md); padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+h1::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 6rem; height: 2px; background: var(--color-trace);
+}
+h1 .accent { color: var(--color-heading); }
+
+h2 {
+  font-size: 1.15rem; margin-top: var(--sp-2xl); margin-bottom: var(--sp-sm);
+  color: var(--text); position: relative;
+}
+h2::before {
+  content: '// '; color: var(--text-dim);
+  font-family: var(--font-mono); font-weight: 400; font-size: 0.85em;
+}
+h2::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-hi) 0%, transparent 60%);
+}
+
+h3 { font-size: 0.95rem; margin-top: var(--sp-lg); margin-bottom: var(--sp-xs); color: var(--color-sub); }
+p { margin-bottom: var(--sp-md); font-size: 0.9rem; }
+a { color: var(--color-link); text-decoration: none; border-bottom: 1px solid transparent; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--color-value); font-style: normal; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.82em;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.1em 0.35em; color: var(--color-link);
+}
+pre { padding: var(--sp-md); overflow-x: auto; margin-bottom: var(--sp-lg); }
+pre code { background: none; border: none; padding: 0; font-size: 0.82rem; line-height: 1.5; }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; margin: var(--sp-md) 0; font-size: 0.82rem; }
+thead { border-bottom: 2px solid var(--border-hi); }
+th {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); text-align: left; padding: var(--sp-xs) var(--sp-sm);
+}
+td { padding: var(--sp-xs) var(--sp-sm); border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-card); color: var(--text); }
+td.val  { color: var(--color-value); font-family: var(--font-mono); font-weight: 500; }
+td.good { color: var(--color-link); }
+td.warn { color: var(--color-value); }
+td.bad  { color: var(--color-danger); }
+
+/* === CALLOUTS === */
+.callout {
+  padding: var(--sp-sm) var(--sp-md); margin: var(--sp-md) 0;
+  border-left: 2px solid var(--_accent, var(--border)); font-size: 0.88rem;
+}
+.callout p { margin-bottom: var(--sp-xs); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-title {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp-xs); color: var(--_accent, var(--text-dim));
+}
+.callout.beginner      { --_accent: var(--color-link); }
+.callout.advanced      { --_accent: var(--color-value); }
+.callout.warning       { --_accent: var(--color-danger); }
+.callout.key-principle { --_accent: var(--color-trace); }
+
+/* === DATA CARDS === */
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--sp-sm); margin: var(--sp-md) 0;
+}
+.data-card { padding: var(--sp-sm) var(--sp-md); position: relative; }
+.data-card-label {
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+}
+.data-card-value {
+  font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700;
+  color: var(--color-value); line-height: 1.3;
+}
+.data-card-value .unit { font-size: 0.65em; color: var(--text-muted); font-weight: 400; }
+.data-card-note { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+a.data-card { text-decoration: none; display: block; color: inherit; border-bottom: 1px solid var(--border); }
+
+/* === TEMP BAR === */
+.temp-bar {
+  height: 4px; border-radius: 2px; margin: var(--sp-sm) 0; position: relative;
+  background: linear-gradient(90deg, var(--color-link) 0%, var(--color-value) 50%, var(--color-danger) 100%);
+}
+.temp-bar-marker { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 1px; }
+
+/* === LISTS === */
+ul, ol { margin-bottom: var(--sp-md); padding-left: var(--sp-lg); }
+li { margin-bottom: 0.1rem; color: var(--text-muted); font-size: 0.88rem; }
+li strong { color: var(--text); }
+ul { list-style: none; }
+ul li::before {
+  content: '>'; font-family: var(--font-mono); color: var(--color-trace);
+  display: inline-block; width: 1em; margin-left: -1em; font-weight: 700; font-size: 0.8em;
+}
+ol { list-style: none; counter-reset: item; }
+ol li { counter-increment: item; }
+ol li::before {
+  content: counter(item, decimal-leading-zero);
+  font-family: var(--font-mono); color: var(--text-dim);
+  font-size: 0.7em; font-weight: 700; margin-right: 0.5em;
+}
+
+/* === DEFINITION LISTS (glossary) === */
+dl { margin-bottom: var(--sp-lg); }
+dt {
+  font-weight: 700; font-size: 0.9rem; color: var(--color-heading);
+  margin-top: var(--sp-md); padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+dt:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+dd {
+  margin-left: 0; margin-top: var(--sp-xs);
+  font-size: 0.88rem; color: var(--text); line-height: 1.55;
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--border);
+}
+
+/* === FIGURE === */
+figure { margin: var(--sp-md) 0; overflow: hidden; }
+figure img { width: 100%; display: block; }
+figcaption {
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);
+  padding: var(--sp-xs) var(--sp-sm); border-top: 1px solid var(--border);
+}
+
+/* === EXPANDABLE FIGURES === */
+details.fig { margin: var(--sp-md) 0; overflow: hidden; }
+details.fig summary {
+  padding: var(--sp-sm) var(--sp-md); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: var(--sp-sm);
+  user-select: none; list-style: none;
+}
+details.fig summary::-webkit-details-marker { display: none; }
+details.fig summary::before {
+  content: '\25b6'; font-size: 0.6em; color: var(--color-link);
+  display: inline-block;
+}
+details.fig .fig-content { padding: var(--sp-sm) var(--sp-md); border-top: 1px solid var(--border); }
+details.fig .fig-content img { max-width: 100%; display: block; border-radius: 2px; }
+details.fig .fig-caption { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); margin-top: var(--sp-xs); }
+details.fig .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+details.fig .fig-grid img { max-width: 100%; display: block; border-radius: 2px; }
+
+/* === TRACE DIVIDER === */
+.trace-divider { height: 1px; margin: var(--sp-xl) 0; background: var(--border); position: relative; }
+.trace-divider::before {
+  content: ''; position: absolute; left: 0; top: -1px;
+  width: 4rem; height: 3px; background: var(--color-trace);
+  border-radius: 1px;
+}
+.trace-divider::after {
+  content: ''; position: absolute; left: 4rem; top: -3px;
+  width: 7px; height: 7px; background: var(--bg);
+  border: 2px solid var(--color-trace); border-radius: 50%;
+}
+
+/* === HOME LAYOUT === */
+.home-layout { }
+.home-content { }
+
+/* === KNOWLEDGE TREE === */
+.knowledge-tree {
+  position: relative;
+  width: 100%; max-width: 350px;
+  aspect-ratio: 350 / 580;
+  margin-top: var(--sp-xl);
+}
+.tree-canvas {
+  position: absolute; inset: 0;
+  width: 350px; height: 580px;
+  transform-origin: top left;
+}
+.tree-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.tree-edge {
+  fill: none; stroke: var(--color-trace); stroke-width: 2;
+  opacity: 0.8;
+}
+.tree-edge-glow {
+  filter: url(#tree-glow);
+}
+.tree-edge-glow path {
+  fill: none; stroke: var(--color-trace); stroke-width: 8;
+  opacity: 0.3;
+}
+.tree-node {
+  position: absolute; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--color-trace); text-decoration: none;
+  border: 1px solid var(--color-trace); border-bottom: 1px solid var(--color-trace);
+  background: color-mix(in srgb, var(--color-trace) 8%, var(--bg));
+  padding: 3px 7px; border-radius: 3px;
+  /* Glow via outline — outline-color IS allowed to change on :visited */
+  outline: 4px solid color-mix(in srgb, var(--color-trace) 25%, transparent);
+  outline-offset: 2px;
+}
+.tree-node:visited {
+  color: var(--text-dim);
+  border-color: var(--border);
+  background-color: var(--bg-card);
+  outline-color: transparent;
+}
+
+/* Large screens: tree breaks out into right margin */
+@media (min-width: 102rem) {
+  .main-content:has(.knowledge-tree) { position: relative; }
+  .knowledge-tree {
+    position: absolute;
+    right: var(--sp-xl);
+    top: var(--sp-xl);
+    margin-top: 0;
+    width: 350px;
+  }
+}
+
+/* === FOOTER === */
+.site-footer {
+  border-top: 1px solid var(--border); padding: var(--sp-lg) 0; margin-top: var(--sp-xl);
+  text-align: center; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);
+}
+
+/* === EFFECTS — glows, transitions, animations, scrollbar, selection === */
+/* This file is non-render-blocking (loaded async) to avoid forced layout warnings. */
+
+/* === GLOW & TRANSITION ENHANCEMENTS === */
+html { scroll-behavior: smooth; }
+.sidebar-logo { text-shadow: 0 0 10px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+.sidebar-link { transition: all 0.12s; }
+.sidebar-link:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 4%, transparent);
+  border-left-color: var(--color-link);
+}
+h1::after { box-shadow: 0 0 8px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+h1 .accent { text-shadow: 0 0 12px color-mix(in srgb, var(--color-heading) 30%, transparent); }
+a { transition: 0.12s; }
+a:hover { border-bottom-color: var(--color-link); text-shadow: 0 0 6px color-mix(in srgb, var(--color-link) 20%, transparent); }
+.data-card { transition: border-color 0.15s; }
+.data-card::before {
+  content: ''; position: absolute; top: -3px; left: 12px;
+  width: 6px; height: 6px; background: var(--color-trace); border-radius: 50%;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 50%, transparent);
+}
+.data-card:hover { border-color: var(--color-trace); }
+a.data-card:hover { border-color: var(--color-heading); text-shadow: none; }
+a.data-card:hover .data-card-value { color: var(--color-heading); }
+.temp-bar { box-shadow: 0 0 8px color-mix(in srgb, var(--color-link) 15%, transparent); }
+details.fig summary::before { transition: transform 0.15s; }
+details.fig[open] summary::before { transform: rotate(90deg); }
+details.fig summary:hover { color: var(--text); background: var(--bg-card-hover); }
+.trace-divider::before { box-shadow: 0 0 10px color-mix(in srgb, var(--color-trace) 40%, transparent); }
+.trace-divider::after { box-shadow: 0 0 6px color-mix(in srgb, var(--color-trace) 30%, transparent); }
+
+/* === KNOWLEDGE TREE GLOW === */
+.tree-node {
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, outline-color 0.2s;
+}
+.tree-node:hover {
+  outline-color: color-mix(in srgb, var(--color-trace) 50%, transparent);
+  border-bottom-color: var(--color-trace);
+}
+
+/* === SCROLLBAR & SELECTION === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-link); }
+::selection { background: color-mix(in srgb, var(--color-heading) 25%, transparent); color: var(--text); }
+
+/* === CONSOLE REVEAL === */
+.cv { clip-path: inset(0 100% 0 0); }
+.cv-show { clip-path: none !important; }
+@keyframes console-in { to { clip-path: inset(0 0 0 0); } }
+.cv-in { animation: console-in 0.32s steps(14, end) both; }
+.cv-now { clip-path: none !important; animation: none !important; }
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.cv-typing::after {
+  content: '\2588'; color: var(--color-trace);
+  font-family: var(--font-mono); font-size: 0.85em; margin-left: 0.15em;
+  animation: cursor-blink 0.5s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content > :not(.site-footer), .cv { clip-path: none !important; animation: none !important; }
+}
+</style></head><body><button class="sidebar-toggle" onclick="document.querySelector(&apos;.sidebar&apos;).classList.toggle(&apos;open&apos;)">= menu</button><div class="site-wrapper"><nav class="sidebar"><div class="sidebar-header"><a class="sidebar-logo" href="index.html">SOLDER<span>.LIBRARY</span></a></div><div class="sidebar-section"><div class="sidebar-section-title">Fundamentals</div><a class="sidebar-link" href="heat-science.html">Heat Science</a><a class="sidebar-link" href="flux.html">Flux</a><a class="sidebar-link" href="alloys.html">Alloys &amp; Temperatures</a><a class="sidebar-link" href="cleanliness.html">Cleanliness</a></div><div class="sidebar-section"><div class="sidebar-section-title">Technique</div><a class="sidebar-link active" href="hand-soldering.html">Hand Soldering</a><a class="sidebar-link" href="hot-air.html">Hot Air Rework</a><a class="sidebar-link" href="smd-prototyping.html">SMD Prototyping</a><a class="sidebar-link" href="fixturing.html">Fixturing &amp; Workholding</a><a class="sidebar-link" href="joint-quality.html">Joint Quality</a></div><div class="sidebar-section"><div class="sidebar-section-title">Process</div><a class="sidebar-link" href="preheat.html">Preheat</a><a class="sidebar-link" href="reflow-profiles.html">Reflow Profiles</a><a class="sidebar-link" href="solder-paste.html">Solder Paste</a></div><div class="sidebar-section"><div class="sidebar-section-title">Deep Dives</div><a class="sidebar-link" href="metallurgy.html">Joint Metallurgy</a><a class="sidebar-link" href="tin-whiskers.html">Tin Whiskers</a></div><div class="sidebar-section"><div class="sidebar-section-title">Reference</div><a class="sidebar-link" href="safety.html">Safety &amp; PPE</a><a class="sidebar-link" href="standards.html">Standards (NASA/IPC)</a><a class="sidebar-link" href="troubleshooting.html">Troubleshooting</a><a class="sidebar-link" href="glossary.html">Glossary</a><a class="sidebar-link" href="sources.html">Sources</a></div></nav><main class="main-content"><div class="page-content"><h1>Hand <span class="accent">Soldering</span></h1><p>One iron, one joint at a time. This is the complete walkthrough — not just what to do, but what goes wrong at each step and how to fix it.</p><div class="trace-divider"></div><h2>Before You Start</h2><div class="callout key-principle"><div class="callout-title">The #1 beginner mistake: tip care</div><p>A bare, oxidized tip is the cause of most soldering frustration. The iron plating oxidizes <em>fast</em> at temperature. Oxidized tips don&apos;t transfer heat, don&apos;t tin, and nothing works. The rule is simple:</p><ol><li><strong>Never leave a bare tip at temperature.</strong> If you&apos;re not actively soldering, the tip must have a solder coating on it.</li><li><strong>Before soldering:</strong> add sacrificial solder to the tip (just a blob), wipe it off on brass wool — this takes the oxides with it — then tin with fresh solder.</li><li><strong>After soldering:</strong> wipe the tip on brass wool, then immediately coat with fresh solder. The solder layer protects the plating from oxidation.</li><li><strong>End of session:</strong> wipe, coat with a generous blob of solder, <em>then</em> turn off. It cools with a protective solder shell.</li></ol></div><h3>Iron Setup</h3><ol><li><strong>Set temperature.</strong> SAC305 lead-free: start at <em>360°C</em>. You&apos;ll adjust from there based on joint size.</li><li><strong>Wait for it to reach temp.</strong> Most stations take 30-60 seconds. The tip is oxidizing the whole time it&apos;s bare and hot — tin it as soon as it&apos;s hot enough to melt solder.</li><li><strong>Add sacrificial solder</strong> — melt a blob onto the tip. This isn&apos;t for soldering — it&apos;s to float out the oxides.</li><li><strong>Wipe on brass wool</strong> — takes the oxides and the sacrificial solder with it. The tip surface underneath is now clean.</li><li><strong>Tin the tip with fresh solder</strong> — apply a thin, even coat. It should look shiny and silver. <em>This</em> is your thermal bridge for soldering.</li></ol><p>Brass wool is better than a wet sponge. A wet sponge cools the tip by 50-100°C on every wipe, and the thermal shock accelerates plating wear. Brass wool cleans without cooling. A dry cellulose cloth (ordinary washing cloth) also works well — a fast wipe removes residue effectively without cooling the tip.</p><div class="callout warning"><div class="callout-title">What can go wrong: tip won&apos;t tin</div><p>The tip is oxidized. Signs: dark/black surface, solder balls up and rolls off the tip. Fix:</p><ol><li>Wipe aggressively on brass wool</li><li>Apply <em>flux</em> directly to the tip face, then feed solder — the flux will dissolve the oxide layer</li><li>If that fails: use a tip polish/tinner that contains <strong>tin powder in a flux medium</strong> (e.g. Hakko FS-100). Push the hot tip into it, twist, tin immediately.</li><li>If the plating is worn through (reddish copper visible), the tip is dead. Replace it. No amount of tinning will save it — solder dissolves bare copper.</li></ol><p><strong>Avoid sal ammoniac blocks and tip tinners containing DAP (diammonium phosphate).</strong> Sal ammoniac is ammonium chloride — it&apos;s acidic enough to corrode the iron plating on your tip with every use. Many cheap tip tinners contain DAP, which actively eats the iron plating. A good tip tinner is tin powder + petroleum jelly + mild flux — no acids that attack the plating.</p></div><h3>Workspace</h3><ul><li><strong>Ventilation</strong> — fume extractor or fan pulling fumes away from your face. Flux fumes aren&apos;t toxic at hobby levels but they irritate lungs over time.</li><li><strong>Helping hands or PCB holder</strong> — you need both hands free (one for iron, one for solder). A vise or PCB holder is not optional.</li><li><strong>Good light</strong> — you can&apos;t inspect joints you can&apos;t see. Desk lamp or headlamp.</li><li><strong>Flux pen or syringe</strong> — liquid no-clean flux. You&apos;ll use this more than you expect.</li><li><strong>Solder wick and/or solder sucker</strong> — for fixing mistakes. Get both.</li></ul><h2>Tip Shape Selection</h2><p>The tip shape determines how much heat you can deliver and where. A wrong tip makes easy joints hard. The right tip makes hard joints easy.</p><table><thead><tr><th>Shape</th><th>Contact Area</th><th>Best For</th><th>Avoid For</th></tr></thead><tbody><tr><td><strong>Chisel (D/screwdriver)</strong></td><td class="good">Large — flat face</td><td>Everything. Through-hole, SMD pads, desoldering. The default.</td><td>Nothing — this is the universal tip.</td></tr><tr><td><strong>Bevel (C/hoof)</strong></td><td class="good">Large — angled flat</td><td>Drag soldering fine-pitch ICs. The angled face rides along the pin row.</td><td>Through-hole where you need to get into tight spaces between pins.</td></tr><tr><td><strong>Knife / blade (K)</strong></td><td class="val">Medium — edge contact</td><td>Drag soldering, clearing bridges, working in tight quarters between components.</td><td>General through-hole — too little mass for large joints.</td></tr><tr><td><strong>Conical / pointed (I/S)</strong></td><td class="bad">Tiny — point contact</td><td>Very tight access where no other tip fits. Rare.</td><td>Almost everything else. <em>This is the tip that comes in the box. Throw it in the drawer.</em></td></tr><tr><td><strong>Micro-chisel (D series, ≤1mm)</strong></td><td class="val">Small flat face</td><td>Fine-pitch SMD passives (0402, 0201), rework in tight spaces.</td><td>Through-hole, connectors — not enough thermal mass.</td></tr></tbody></table><div class="callout key-principle"><div class="callout-title">Chisel is the default</div><p>If you own one tip, make it a chisel — 2.4mm wide for general work, 1.6mm for mostly-SMD work. The flat face gives you maximum contact area (= maximum heat transfer), and you can use the corner for finer work. A chisel tip can do 90% of what every other shape does.</p></div><h3>Tip Size vs Joint Size</h3><p>Match the tip to the joint, not to the smallest thing on the board. A tip that&apos;s too small for the joint can&apos;t deliver enough heat — you compensate with more time, which burns flux and risks pad lift.</p><table><thead><tr><th>Joint Type</th><th>Tip Width</th><th>Why</th></tr></thead><tbody><tr><td>0402-0603 passives</td><td class="val">0.8-1.6mm chisel</td><td>Matches pad size. Enough mass for quick joints.</td></tr><tr><td>0805-1206 passives</td><td class="val">1.6-2.4mm chisel</td><td>Good contact on the pad without overlapping neighbors.</td></tr><tr><td>Through-hole (standard)</td><td class="val">2.4-3.2mm chisel</td><td>Contacts both pad and lead with the flat face. The workhorse.</td></tr><tr><td>Through-hole (large pads, connectors)</td><td class="val">3.2-4mm chisel</td><td>More thermal mass for large copper areas.</td></tr><tr><td>Ground plane connections</td><td class="val">3.2mm+ chisel</td><td>Biggest tip you can fit. The ground plane is a heat sink — fight it with mass.</td></tr><tr><td>Drag soldering (0.5mm pitch)</td><td class="val">2-3mm bevel or knife</td><td>Angled face slides along pins. Solder separates by surface tension.</td></tr><tr><td>Drag soldering (0.65mm pitch)</td><td class="val">2.4mm chisel or bevel</td><td>Wider pitch is more forgiving — chisel works fine.</td></tr></tbody></table><div class="callout warning"><div class="callout-title">The conical tip trap</div><p>Most soldering irons ship with a conical (pointed) tip. Beginners assume this is the right tip because it looks precise. It&apos;s the <em>worst</em> general-purpose tip — point contact means almost no heat transfer. The tip touches the joint at a single point instead of a flat face, so heat delivery is a fraction of what a chisel provides. New solderers then blame the iron, turn up the temperature, burn the flux, and get bad joints.</p><p>Switch to a chisel tip immediately. It&apos;s the single cheapest improvement you can make.</p></div><h3>Tip Geometry and Heat Transfer</h3><p>The thermal path from heater to joint has three links, and tip shape affects the last two:</p><ol><li><strong>Heater → tip body</strong> — could be a ceramic element, a cartridge with integrated heater, induction via the Curie effect, a gas flame, or a copper piece heated in a fire. The physics don&apos;t care — heat is heat. Fancier stations recover temperature faster, but the thermal path from tip body to joint is the same regardless.</li><li><strong>Tip body → tip face</strong> — a thick, short tip conducts heat to the working face faster than a long, thin one. This is why conical tips are bad: the taper restricts the thermal cross-section.</li><li><strong>Tip face → joint</strong> — contact area. A 2.4mm chisel flat face touching a pad transfers heat across the entire contact area simultaneously. A conical tip touching the same pad transfers through a ~0.1mm circle. The chisel delivers <em>roughly 20× more heat per unit time</em> through contact area alone.</li></ol><p>Adding a small bead of solder to the tip before touching the joint (a &quot;thermal bridge&quot;) fills air gaps between the tip face and the joint surfaces, further increasing the effective contact area. This is why you tin the tip — not just for oxidation protection, but for heat transfer.</p><div class="trace-divider"></div><h2>Through-Hole Soldering</h2><p>The foundation. If you&apos;re learning, start here.</p><h3>Step 1: Insert Component</h3><ul><li>Push leads through the holes from the component side</li><li>Bend leads slightly on the solder side (10-15°) to hold the component in place</li><li>Component should sit flush against the board (unless intentionally raised)</li></ul><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Lead won&apos;t fit the hole</strong> — don&apos;t force it. Check you have the right footprint. If the lead is very slightly too thick, a gentle squeeze with pliers can help — but never force-fit or you&apos;ll damage the plating inside the barrel.</li><li><strong>Component falls out when you flip the board</strong> — bend leads more, or tape component in place with kapton tape.</li></ul></div><h3>Step 2: Heat the Joint</h3><ol><li>Place iron tip so it touches <em>both</em> the pad and the lead simultaneously</li><li>Use the flat face of a chisel tip — maximum contact area = maximum heat transfer</li><li>Hold for 1-2 seconds to let the pad and lead come up to temperature</li></ol><details class="fig"><summary>Photo: Iron contact on pad and lead</summary><div class="fig-content"><img alt="Soldering iron tip contacting pad and lead" src="assets/adafruit-excellent-soldering/063.jpg" /><div class="fig-caption">Chisel tip making contact with both the pad and the component lead. Source: Adafruit</div></div></details><div class="callout key-principle"><div class="callout-title">Pressure doesn&apos;t help — contact area does</div><p>Pressing the iron harder against the pad does <strong>not</strong> transfer more heat. What transfers heat is <em>contact surface area</em> between tip and workpiece. Use the flat face of a chisel tip, not the point. And add a small bead of solder to the tip before touching the joint — the molten solder fills air gaps and acts as a thermal bridge, dramatically improving heat transfer.</p><p>Pressing hard on the tip can actually cause damage: on irons where the tip sits on a ceramic heater element, force on a loose tip transmits directly to the ceramic and can crack it.</p></div><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Only touching the lead, not the pad</strong> — solder will wet the lead but not the pad. You get a &quot;cold&quot; joint that looks soldered but isn&apos;t bonded to the board.</li><li><strong>Only touching the pad, not the lead</strong> — opposite problem. Solder flows around the lead without bonding to it.</li><li><strong>Pad connected to ground plane — iron can&apos;t bring it to temp</strong> — switch to a bigger tip, turn up to 380-400°C, or preheat the board. See <a href="preheat.html">Preheat</a>.</li></ul></div><h3>Step 3: Feed Solder</h3><ol><li>Touch solder wire to the junction where the iron, pad, and lead meet</li><li><em>Do not</em> melt solder onto the iron tip and try to carry it to the joint — it won&apos;t transfer</li><li>Feed enough solder to form a concave fillet around the lead — typically 1-2mm of wire for a standard through-hole joint</li><li>The solder should wick around the lead and fill the barrel. You&apos;ll see it flow.</li></ol><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Solder balls up on the tip, won&apos;t flow to the joint</strong> — the pad/lead isn&apos;t hot enough yet. Wait another second. If still nothing, the pad is oxidized — add flux.</li><li><strong>Solder flows but only on one side</strong> — iron isn&apos;t contacting both surfaces. Reposition.</li><li><strong>Solder disappears into the hole with no visible fillet</strong> — you need more solder. The barrel is wicking it all up. Keep feeding until you see a fillet form on top.</li><li><strong>Too much solder — big blob</strong> — don&apos;t panic. Remove solder wick (see Desoldering below), apply flux, redo.</li></ul></div><h3>Step 4: Remove</h3><ol><li><strong>Remove solder wire first</strong> — pull it away from the joint</li><li><strong>Then remove iron</strong> — pull straight away, don&apos;t drag</li><li><strong>Don&apos;t move anything</strong> — hold the board and component still for 2-3 seconds while the joint solidifies</li><li>Total iron contact time should be <em>2-5 seconds</em>. If it took longer, you need more heat next time.</li></ol><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Pulled iron away too slowly — icicle/spike</strong> — cosmetic issue mostly. Can be remelted with a touch of the iron + flux.</li><li><strong>Board moved during solidification — disturbed joint</strong> — rough, cracked surface. Reheat with flux and hold still this time.</li><li><strong>Pad lifted</strong> — too much heat for too long. The adhesive between copper and FR4 weakens well above Tg (130-180°C for standard FR4) and can fail with prolonged exposure. If the trace is still connected, you can still use the joint. If the pad tore off completely, you&apos;ll need a bodge wire.</li></ul></div><h3>Step 5: Inspect</h3><ul><li>Good joint: smooth concave fillet, solder feathers onto pad, lead visible at top</li><li>Wetting angle &lt; 90° (ideally &lt; 30°)</li><li>Lead-free: matte/satin finish is <em>normal</em> — don&apos;t rework good joints</li><li>Check the solder side AND the component side — barrel should have visible solder</li></ul><details class="fig"><summary>Figure: Good vs bad joints — the full spectrum</summary><div class="fig-content"><img alt="Labeled comparison of solder joint defects" src="assets/adafruit-excellent-soldering/011.jpg" /><div class="fig-caption">From left: cold joint with insufficient wetting, cold joint, insufficient wetting (pin &amp; pad), insufficient wetting (pad), OK, insufficient wetting (pad), too much solder, OK, too much solder. Source: Adafruit</div></div></details><h3>Step 6: Trim Leads</h3><ul><li>Cut leads flush with the top of the solder fillet using flush cutters</li><li>Cut <em>after</em> soldering, not before — the lead sticking through gives you something for the solder to fillet against</li><li>Point cutters away from your face — leads fly</li></ul><div class="trace-divider"></div><h2>SMD Soldering (Individual Components)</h2><p>For passives (0805, 0603, etc.) and small ICs. For fine-pitch ICs, see Drag Soldering below.</p><h3>Step 1: Tin One Pad</h3><ol><li>Apply a small amount of solder to <em>one</em> pad only</li><li>This creates a solder &quot;pillow&quot; to tack the component to</li></ol><h3>Step 2: Place Component</h3><ol><li>Hold component with tweezers</li><li>Remelt the solder pillow with the iron</li><li>Slide the component into position while the solder is molten</li><li>Remove iron, hold component still until solder freezes</li><li>Check alignment. The component is tacked on one end — you can reheat and nudge it.</li></ol><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Component tombstones (stands up on one end)</strong> — too much solder on the pillow pad, or component not centered. Remove, clean pads with wick, start over.</li><li><strong>Component slides off-center</strong> — tweezers slipped. Reheat the tack joint and reposition. This is why you only solder one pad first.</li><li><strong>Solder won&apos;t melt the pillow — component lands on solid solder</strong> — add flux to the pad. The pillow may have oxidized.</li></ul></div><h3>Step 3: Solder Other End(s)</h3><ol><li>Apply flux to remaining pad(s)</li><li>Heat pad and component termination simultaneously</li><li>Feed solder — small amount, you want a fillet not a blob</li></ol><h3>Step 4: Reflow First Joint</h3><p>Go back to the tack joint and reflow it with a touch of fresh solder and flux. The tack joint was made with the component being positioned — it may not have perfect wetting.</p><div class="trace-divider"></div><h2>Drag Soldering (Fine-Pitch ICs)</h2><p>For QFP, SOIC, TSSOP — anything with a row of pins on 0.5-0.65mm pitch.</p><ol><li><strong>Align and tack</strong> — flux the pads, position the IC precisely, tack two opposite corner pins</li><li><strong>Verify alignment</strong> — check every pin lines up with its pad. Realign now or suffer later.</li><li><strong>Flood with flux</strong> — apply generous flux across all pins. More than you think.</li><li><strong>Load the tip</strong> — apply a small amount of solder to a bevel or chisel tip</li><li><strong>Drag</strong> — slowly drag the tip across the row of pins at a slight angle. The flux + surface tension will separate the solder between pins.</li><li><strong>Inspect for bridges</strong> — check under magnification. Bridges are normal with drag soldering.</li><li><strong>Fix bridges</strong> — more flux + drag a clean tip through the bridge. Or flux + solder wick.</li></ol><div class="callout beginner"><div class="callout-title">This looks terrifying</div><p>It&apos;s not. The flux does the work. Surface tension naturally separates solder between pins when there&apos;s enough flux. Your first attempt will probably have a bridge or two — that&apos;s fine, they fix in seconds. Practice on a dead board first.</p></div><div class="callout advanced"><div class="callout-title">The tacky flux + paste trick</div><p>Many YouTube soldering demos use a mix of flux and solder paste with a very low ratio of tin — essentially a thin, tacky paste that&apos;s mostly flux with just enough solder particles to form the joint. You apply it liberally across all pins, then drag the iron through. The heavy flux content prevents bridges while the sparse solder wets each pin individually. This is especially effective on 0.4-0.5mm pitch QFPs where standard drag soldering needs more precision.</p><p>You can buy this commercially as &quot;tacky flux&quot; or make it by mixing a small amount of solder paste into liquid flux until it has a thin, paste-like consistency.</p></div><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Bridges everywhere</strong> — not enough flux. Seriously, add more flux. Then drag a clean tip through.</li><li><strong>Pins not wetting</strong> — flux has burned off, or pads are oxidized. Clean with IPA, re-flux, try again.</li><li><strong>IC shifted during dragging</strong> — wasn&apos;t tacked well enough. Desolder, realign, tack more pins before dragging.</li></ul></div><div class="trace-divider"></div><h2>Wire Soldering</h2><p>Connecting wire to pads, terminals, or other wire.</p><h3>Wire to Pad</h3><ol><li>Strip wire end — expose 2-3mm of conductor</li><li>Tin the wire end — hold iron to wire, feed solder until it wicks into the strands</li><li>Tin the pad — apply thin solder coating</li><li>Hold tinned wire against tinned pad, heat both with iron until solders merge</li><li>Remove iron, hold still</li></ol><h3>Wire to Wire</h3><ol><li>Strip both ends</li><li>Tin both ends</li><li>Hold tinned ends together (mechanical connection or helping hands)</li><li>Apply iron and a small amount of fresh solder to bridge them</li><li>The joint should flow together into one smooth fillet</li></ol><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Solder won&apos;t wick into stranded wire</strong> — wire is oxidized or coated (enamel, lacquer). Scrape/sand the coating off first, then flux heavily.</li><li><strong>Wire insulation melting back too far</strong> — iron too close to insulation. Use a thermal shunt (clip a heatink or alligator clip between the iron and the insulation) or work faster.</li><li><strong>Cold joint where wires meet</strong> — both wires need to be at temp. Hold iron against both simultaneously.</li></ul></div><div class="trace-divider"></div><h2>Desoldering</h2><p>Removing solder from joints. Essential for rework.</p><h3>Solder Wick (Braid)</h3><ol><li>Apply flux to the wick <em>and</em> to the joint</li><li>Place wick on top of the joint</li><li>Press iron on top of the wick — heat flows through the wick into the joint</li><li>Solder will wick up into the braid by capillary action</li><li>Remove iron and wick together — <em>don&apos;t</em> lift the wick while it&apos;s cold or you&apos;ll rip the pad off</li><li>Use fresh section of wick for each joint</li></ol><div class="callout warning"><div class="callout-title">What can go wrong</div><ul><li><strong>Wick doesn&apos;t absorb solder</strong> — not enough flux, or iron isn&apos;t hot enough. Add flux to both wick and joint. Use a bigger tip.</li><li><strong>Pad lifted when removing wick</strong> — wick cooled down and soldered itself to the pad. Always remove iron+wick together while still hot.</li><li><strong>Solder remains in the barrel</strong> — wick can only reach what it contacts. For through-holes, work from both sides, or use a solder sucker.</li></ul></div><h3>Solder Sucker (Desoldering Pump)</h3><ol><li>Cock the sucker (pull plunger back)</li><li>Heat the joint until solder is fully molten</li><li>Place sucker tip right at the joint</li><li>Trigger — the vacuum sucks molten solder out</li><li>Repeat if needed — often takes 2-3 passes for through-hole joints</li></ol><h3>When to Use Which</h3><table><thead><tr><th>Method</th><th>Best For</th><th>Weakness</th></tr></thead><tbody><tr><td>Solder wick</td><td>SMD pads, cleaning up excess, precision work</td><td>Slow on through-holes with full barrels</td></tr><tr><td>Solder sucker</td><td>Through-hole removal, clearing barrels</td><td>Imprecise, can&apos;t get into tight spaces</td></tr><tr><td>Hot air + tweezers</td><td>SMD component removal</td><td>Risk of heating neighbors</td></tr></tbody></table><div class="trace-divider"></div><h2>Tip Maintenance</h2><p>A bad tip makes everything harder. Most &quot;my iron sucks&quot; complaints are actually <em>tip care</em> problems.</p><h3>The Cycle (Every Joint)</h3><ol><li><strong>Before the joint:</strong> wipe on brass wool, verify tin coating is shiny. If not, add solder, wipe, re-tin.</li><li><strong>Solder the joint</strong> (2-5 seconds)</li><li><strong>After the joint:</strong> wipe on brass wool, re-tin immediately. The solder coating protects against oxidation.</li></ol><h3>Pausing (30 seconds to 5 minutes)</h3><ul><li>Tin the tip generously and rest it in the holder</li><li>When you come back: add sacrificial solder, wipe, re-tin, continue</li><li>If the tip sat bare for even a minute at 360°C, it may need flux + aggressive cleaning to re-tin</li></ul><h3>End of Session</h3><ol><li>Wipe tip on brass wool</li><li>Apply a <em>thick</em> coating of solder — more than you&apos;d use for a joint</li><li>Turn off the iron</li><li>Let it cool with the solder shell on. This protects the iron plating from oxidation while stored.</li></ol><h3>Recovery: Badly Oxidized Tip</h3><ol><li>If tip is dark but plating intact: flux directly on tip face, feed solder aggressively, wipe, repeat 2-3 times</li><li>If that fails: use a tin-powder tip polish (e.g. Hakko FS-100). Push tip in, twist, pull out, tin immediately.</li><li>If tip is pitted or copper is visible: <em>replace the tip</em>. Solder dissolves bare copper, making the damage accelerate.</li></ol><div class="callout advanced"><div class="callout-title">Full tip restoration procedure (for severely oxidized tips)</div><p>When the quick recovery fails, this procedure restores the alloy layer in the iron plating:</p><ol><li>Set station to <strong>300°C (~575°F)</strong> — lower than working temp to minimize further oxidation during the process</li><li>Apply flux-cored solder or tip polish to the tip face</li><li>Remove the solder with a damp sponge (use <em>deionized or distilled water only</em> — tap water leaves mineral deposits on the tip surface)</li><li>If carbonized residue won&apos;t wipe off, use a polishing bar</li><li>Repeat steps 2-4 a total of <strong>3-5 times</strong></li><li>Apply a final coat of solder and leave it <strong>undisturbed on the tip for 10 minutes</strong> — this allows the tin-iron alloy layer to reform properly</li><li>Apply fresh solder, wipe off excess</li><li>Let tip cool completely, then clean any flux residue with IPA</li></ol><p>This is a recovery procedure, not routine maintenance. If a tip requires this regularly, you&apos;re running too hot or leaving tips bare at temperature.</p></div><div class="callout warning"><div class="callout-title">Tip lifespan</div><p>With proper care (always tinned, brass wool or dry cellulose cloth not wet sponge, stored with solder coating): <em>months to years</em> of daily use.</p><p>With bad care (left bare at temp, wet sponge, stored clean): <em>days to weeks</em> before the plating fails.</p><p>The single biggest factor: <strong>never leave a bare tip at temperature</strong>. Even 30 seconds of bare exposure at 360°C causes measurable oxidation.</p></div><h3>Iron Quality Matters</h3><div class="callout advanced"><div class="callout-title">Thermal recovery</div><p>Thermal recovery = how fast the tip returns to set temperature after heat is drawn away.</p><ul><li><strong>Cheap irons:</strong> slow recovery, tip temp swings wildly, inconsistent joints</li><li><strong>Quality stations (Hakko FX-888D, Weller WE1010):</strong> fast recovery, stable temp</li><li><strong>JBC/Metcal cartridge design:</strong> tip IS the heater element, sensor at contact point — fastest recovery in the industry</li><li>A $100 Hakko station will produce better joints than a $30 iron in the hands of the same person</li></ul></div><div class="trace-divider"></div><h2>Cleanup &amp; Inspection</h2><h3>Flux Residue</h3><ul><li><strong>No-clean flux:</strong> can be left on if no conformal coating. Cosmetically ugly but electrically fine.</li><li><strong>Rosin/RMA flux:</strong> optional cleanup. IPA (isopropyl alcohol 99%+) and a brush.</li><li><strong>RA / Water-soluble flux:</strong> <em>must</em> clean. RA: IPA or specialized cleaner. Water-soluble: deionized water within 1 hour of soldering.</li><li>Why clean? Uncleaned active flux residue is conductive when humid — causes corrosion, dendritic growth, and eventual shorts.</li></ul><h3>Cleaning Procedure</h3><ol><li>Apply IPA (99%) with a brush or cotton swab</li><li>Scrub gently — the flux will dissolve</li><li>Wipe with lint-free cloth or let air dry</li><li>For stubborn residue: soak 30 seconds, scrub, repeat</li><li>Under BGA/QFN: ultrasonic cleaning or spray wash — you can&apos;t reach under there with a brush</li></ol><h3>Visual Inspection</h3><ul><li>Inspect every joint under good lighting</li><li>10X magnification for fine-pitch work (jeweler&apos;s loupe or USB microscope)</li><li>Check: concave fillet? smooth transition to pad? no bridges? no icicles?</li><li>Flip the board — check component side for through-hole barrel fill</li><li>Gently tug components — a good joint doesn&apos;t move</li></ul><div class="callout beginner"><div class="callout-title">The cheapest upgrade</div><p>A $15 USB microscope will show you things you can&apos;t see with the naked eye. Cold joints, hairline bridges, poor wetting — all invisible at arm&apos;s length but obvious at 20X. Buy one.</p></div><footer class="site-footer">SOLDER.LIBRARY — Lead-free soldering reference.</footer></div></main></div></body></html>
